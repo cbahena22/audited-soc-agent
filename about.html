@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-UYhcdWeeLaagSZyJd9b53FhkZ9cKouxN9vhOjiGOsjw='; script-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'"><meta name="referrer" content="no-referrer"><meta name="viewport" content="width=device-width, initial-scale=1"><title>About this demo - audited SOC agent demo</title><style>:root { --bg: #fbfbf9; --fg: #1d1f21; --muted: #5c6166; --line: #d9dcd6; --card: #ffffff;
+        --bad: #a3221b; --bad-bg: #fdecea; --ok: #1f6f43; --warn: #8a5a00; --banner: #eef2f7; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #16181a; --fg: #e6e6e3; --muted: #a2a7ab; --line: #34383c; --card: #1e2124;
+          --bad: #ff8a80; --bad-bg: #3a1d1b; --ok: #7fd1a0; --warn: #f0c05a; --banner: #23303d; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; }
+main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+h1 { font-size: 1.4rem; margin: 0 0 4px; } h2 { font-size: 1.1rem; margin: 28px 0 8px; }
+.muted { color: var(--muted); }
+.banner { background: var(--banner); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; margin: 12px 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; margin: 8px 0; }
+.verdict { font-size: 1.2rem; font-weight: 600; }
+.verdict.malicious { color: var(--bad); } .verdict.benign { color: var(--ok); } .verdict.needs_human { color: var(--warn); }
+.injection { background: var(--bad-bg); border: 2px solid var(--bad); border-radius: 8px; padding: 12px 16px; }
+.injection h2 { color: var(--bad); margin-top: 0; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 16px; margin: 0; } dt { color: var(--muted); }
+details { margin: 4px 0; } summary { cursor: pointer; font-family: ui-monospace, monospace; }
+pre { white-space: pre-wrap; word-break: break-word; background: var(--bg); border: 1px solid var(--line);
+      border-radius: 6px; padding: 8px; font: 13px/1.4 ui-monospace, monospace; overflow-x: auto; }
+blockquote { margin: 4px 0; padding-left: 10px; border-left: 3px solid var(--line); }
+table { border-collapse: collapse; width: 100%; } th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tag { font-size: 0.8rem; border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; color: var(--muted); }
+:root { --link: #1f4f8a; }
+@media (prefers-color-scheme: dark) { :root { --link: #9cc3ff; } }
+a { color: var(--link); }
+header.site { background: var(--card); border-bottom: 1px solid var(--line); }
+header.site div { max-width: 1080px; margin: 0 auto; padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 4px 20px; align-items: baseline; }
+.brand { margin: 0; font-weight: 600; }
+nav a { margin-right: 14px; white-space: nowrap; }
+nav a[aria-current="page"] { color: var(--fg); font-weight: 600; text-decoration: underline; }
+nav.sub { margin: 4px 0 16px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+main { max-width: 1080px; }
+dd { margin: 0; overflow-wrap: anywhere; }
+code, .hash { font-family: ui-monospace, monospace; font-size: 0.85em; overflow-wrap: anywhere; word-break: break-all; }
+.mark { display: inline-block; min-width: 3.4em; text-align: center; font-size: 0.8rem; font-weight: 600; border: 1px solid currentColor; border-radius: 4px; padding: 0 6px; margin-right: 6px; }
+.mark.pass { color: var(--ok); } .mark.note { color: var(--warn); } .mark.fail { color: var(--bad); }
+.honest { border-left: 4px solid var(--warn); }
+.honest ul, .card ul { margin: 4px 0; padding-left: 20px; }
+.bad { color: var(--bad); font-weight: 600; } .ok { color: var(--ok); }
+.scroll { overflow-x: auto; }
+.row h3 { font-size: 1rem; margin: 0 0 4px; }
+@media (max-width: 640px) {
+  table.stack thead { display: none; }
+  table.stack, table.stack tbody, table.stack tr, table.stack td { display: block; width: 100%; }
+  table.stack tr { background: var(--card); border: 1px solid var(--line); border-radius: 8px; margin: 8px 0; padding: 4px 10px; }
+  table.stack td { border: 0; padding: 2px 0; overflow-wrap: anywhere; }
+  table.stack td::before { content: attr(data-label) ": "; color: var(--muted); }
+  dl { grid-template-columns: 1fr; }
+}</style></head>
+<body>
+<header class="site"><div><p class="brand">Harbor Watch MSSP: AI triage, audited</p><nav aria-label="site"><a href="index.html">Alert queue</a><a href="checklist.html">Buyer's checklist</a><a href="about.html" aria-current="page">About this demo</a></nav></div></header>
+<main>
+<p class="banner">Synthetic data. Run 20261109T195806Z-mock, replay of recorded run live-20261028 (claude-sonnet-5-5, recorded 2026-10-28): $0, no model call. Nothing here was executed anywhere.</p>
+<h1>About this demo</h1>
+<p>Harbor Watch MSSP is a fictional managed security provider. Every alert, host, user and address here is synthetic (documentation IP ranges, <code>corp.example</code> names).</p>
+<p>What you are looking at: a replay of recorded run live-20261028 (claude-sonnet-5-5, recorded 2026-10-28): the agent triaged each alert once with the real model API, and replaying the recording costs $0 and makes no model call. The replay writes the audit trail; a live run writes it as it goes.</p>
+<p>Dates and times: the recorded date is the one in the recording id. Times in the audit trails and trust reports (ending in Z) are UTC, so they can fall on the next day.</p>
+<p>The agent can only read. Its recommended actions wait for a person, and the two approvals in this demo are dry runs recorded as &quot;scripted demo approval&quot;. Threat intel is post-triage enrichment (synthetic provider answers); the verdict did not use it.</p>
+<h2>Reproduce it</h2><p>From a clone: install from the lock files, then <code>asa demo</code> (replay, intel, two scripted approvals, evidence check, trust reports, this console). Check any trail with <code>asa audit verify out/runs/&lt;run&gt;/&lt;alert&gt;</code>.</p>
+<h2>Read with these numbers</h2>
+<div class="card honest"><p><strong>Read the trust claims with these numbers</strong></p><ul><li>20/30 verdicts match the answer key; a severity-only rule gets 15/30.</li><li>It hands 20 of 30 alerts to a person; the answer key expects 10 (it over-escalates).</li><li>1 malicious alert in the set; the agent marked 0 as malicious.</li><li>Approver names are self-declared (--as is free text).</li></ul><p class="muted">source: evals/results.json, recording live-20261028, n = 30</p></div>
+<h2 id="limits">Honest limits</h2><ul><li>Synthetic data and one recorded run (n = 30): the numbers describe this set, not your environment.</li><li>The evidence checker proves a quote exists in the cited event, not that the reasoning is right.</li><li>Planted instructions are a known set; text that does not look like an instruction is not flagged.</li><li>Threat-intel decisions come from synthetic provider answers, after triage; the verdict did not use them.</li><li>The console replays a run; it does not run the agent.</li><li>Approvals are dry runs: nothing is executed anywhere. Approver names are self-declared.</li><li>The audit trail is tamper-evident, not tamper-proof: a hash chain shows an edit, it does not stop someone rewriting the whole chain. The head hash of the demo run is written in the README so git history anchors it.</li></ul>
+<p class="muted">These pages have no scripts and load nothing from the network (Content-Security-Policy default-src 'none'). Links to code open the public repository.</p>
+</main>
+</body></html>

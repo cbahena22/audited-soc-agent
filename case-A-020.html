@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-UYhcdWeeLaagSZyJd9b53FhkZ9cKouxN9vhOjiGOsjw='; script-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'"><meta name="referrer" content="no-referrer"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Case A-020 - audited SOC agent demo</title><style>:root { --bg: #fbfbf9; --fg: #1d1f21; --muted: #5c6166; --line: #d9dcd6; --card: #ffffff;
+        --bad: #a3221b; --bad-bg: #fdecea; --ok: #1f6f43; --warn: #8a5a00; --banner: #eef2f7; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #16181a; --fg: #e6e6e3; --muted: #a2a7ab; --line: #34383c; --card: #1e2124;
+          --bad: #ff8a80; --bad-bg: #3a1d1b; --ok: #7fd1a0; --warn: #f0c05a; --banner: #23303d; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; }
+main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+h1 { font-size: 1.4rem; margin: 0 0 4px; } h2 { font-size: 1.1rem; margin: 28px 0 8px; }
+.muted { color: var(--muted); }
+.banner { background: var(--banner); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; margin: 12px 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; margin: 8px 0; }
+.verdict { font-size: 1.2rem; font-weight: 600; }
+.verdict.malicious { color: var(--bad); } .verdict.benign { color: var(--ok); } .verdict.needs_human { color: var(--warn); }
+.injection { background: var(--bad-bg); border: 2px solid var(--bad); border-radius: 8px; padding: 12px 16px; }
+.injection h2 { color: var(--bad); margin-top: 0; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 16px; margin: 0; } dt { color: var(--muted); }
+details { margin: 4px 0; } summary { cursor: pointer; font-family: ui-monospace, monospace; }
+pre { white-space: pre-wrap; word-break: break-word; background: var(--bg); border: 1px solid var(--line);
+      border-radius: 6px; padding: 8px; font: 13px/1.4 ui-monospace, monospace; overflow-x: auto; }
+blockquote { margin: 4px 0; padding-left: 10px; border-left: 3px solid var(--line); }
+table { border-collapse: collapse; width: 100%; } th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tag { font-size: 0.8rem; border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; color: var(--muted); }
+:root { --link: #1f4f8a; }
+@media (prefers-color-scheme: dark) { :root { --link: #9cc3ff; } }
+a { color: var(--link); }
+header.site { background: var(--card); border-bottom: 1px solid var(--line); }
+header.site div { max-width: 1080px; margin: 0 auto; padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 4px 20px; align-items: baseline; }
+.brand { margin: 0; font-weight: 600; }
+nav a { margin-right: 14px; white-space: nowrap; }
+nav a[aria-current="page"] { color: var(--fg); font-weight: 600; text-decoration: underline; }
+nav.sub { margin: 4px 0 16px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+main { max-width: 1080px; }
+dd { margin: 0; overflow-wrap: anywhere; }
+code, .hash { font-family: ui-monospace, monospace; font-size: 0.85em; overflow-wrap: anywhere; word-break: break-all; }
+.mark { display: inline-block; min-width: 3.4em; text-align: center; font-size: 0.8rem; font-weight: 600; border: 1px solid currentColor; border-radius: 4px; padding: 0 6px; margin-right: 6px; }
+.mark.pass { color: var(--ok); } .mark.note { color: var(--warn); } .mark.fail { color: var(--bad); }
+.honest { border-left: 4px solid var(--warn); }
+.honest ul, .card ul { margin: 4px 0; padding-left: 20px; }
+.bad { color: var(--bad); font-weight: 600; } .ok { color: var(--ok); }
+.scroll { overflow-x: auto; }
+.row h3 { font-size: 1rem; margin: 0 0 4px; }
+@media (max-width: 640px) {
+  table.stack thead { display: none; }
+  table.stack, table.stack tbody, table.stack tr, table.stack td { display: block; width: 100%; }
+  table.stack tr { background: var(--card); border: 1px solid var(--line); border-radius: 8px; margin: 8px 0; padding: 4px 10px; }
+  table.stack td { border: 0; padding: 2px 0; overflow-wrap: anywhere; }
+  table.stack td::before { content: attr(data-label) ": "; color: var(--muted); }
+  dl { grid-template-columns: 1fr; }
+}</style></head>
+<body>
+<header class="site"><div><p class="brand">Harbor Watch MSSP: AI triage, audited</p><nav aria-label="site"><a href="index.html">Alert queue</a><a href="checklist.html">Buyer's checklist</a><a href="about.html">About this demo</a></nav></div></header>
+<main>
+<p class="banner">Synthetic data. Run 20261109T195806Z-mock, replay of recorded run live-20261028 (claude-sonnet-5-5, recorded 2026-10-28): $0, no model call. Nothing here was executed anywhere.</p>
+<nav class="sub" aria-label="this alert"><a href="index.html">&larr; queue</a><a href="case-A-020.html" aria-current="page">Case</a><a href="trust-A-020.html">Trust report</a><a href="audit-A-020.html">Audit trail</a></nav>
+<h1>Case A-020: Rare outbound destination</h1>
+<p class="banner"><span class="mark pass">pass</span>Chain verified when this page was built, head <span class="hash">31de99c945f7f3159797e186b64281ab3db5158c089e6de2b2a4623e3382d136</span>; re-run <code>asa audit verify out/runs/20261109T195806Z-mock/A-020</code></p>
+<p class="muted">run 20261109T195806Z-mock &middot; claude-sonnet-5-5 &middot; effort high</p>
+<div class="card"><dl><dt>rule</dt><dd>Rare outbound destination</dd><dt>technique</dt><dd>T1071.001</dd><dt>severity</dt><dd>medium</dd><dt>host</dt><dd>WS-10</dd><dt>user</dt><dd>user10</dd><dt>time</dt><dd>2026-03-02T03:53:41.000Z</dd><dt>trigger event</dt><dd>E-004458</dd></dl></div>
+<div class="card"><p class="verdict needs_human">Verdict: needs_human <span class="tag">confidence low</span></p><p>At 03:53 UTC, VendorAssist.exe was started with --background by explorer.exe under user10 on WS-10. Three seconds later it connected to 203.0.113.150:8443 (assist.vendor-support.example). There is no other activity on the host, no earlier VendorAssist activity, and no malicious child processes or injected text. The events can&#x27;t show whether this is a sanctioned remote-support tool, so the client needs to confirm. Ask whether VendorAssist is approved, and whether user10 was active at 03:53.</p></div>
+<h2 id="claims">Claims and evidence</h2><p class="muted">Each claim with the events it cites; open an event id to see the event as the agent's tools showed it.</p>
+<div class="card"><p><strong>1.</strong> VendorAssist.exe was launched by explorer.exe in the user10 session with a --background argument. This is the first VendorAssist activity seen on WS-10 in the data checked. It has no child processes and no other events around it.</p><blockquote>E-004457 <code>process.command_line</code>: VendorAssist.exe --background</blockquote><details><summary>E-004457</summary><pre>{
+  &quot;event_id&quot;: &quot;E-004457&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-02T03:53:38.000Z&quot;,
+  &quot;host&quot;: &quot;WS-10&quot;,
+  &quot;kind&quot;: &quot;process&quot;,
+  &quot;user.name&quot;: &quot;user10&quot;,
+  &quot;process.name&quot;: &quot;VendorAssist.exe&quot;,
+  &quot;process.entity_id&quot;: &quot;P-feadea85e7a1&quot;,
+  &quot;process.command_line&quot;: &quot;VendorAssist.exe --background&quot;,
+  &quot;process.hash.sha256&quot;: &quot;dd361d90d9ef2a7fcfcdd019d89bf756d8d47aac79b1b1f63d33dab59b725a2d&quot;,
+  &quot;process.parent.name&quot;: &quot;explorer.exe&quot;,
+  &quot;process.parent.entity_id&quot;: &quot;P-e8e5912cd8f9&quot;
+}</pre></details></div>
+<div class="card"><p><strong>2.</strong> Three seconds after launch the same process connected to a rare external destination on port 8443. The DNS name looks like a vendor-support service, but the IP and domain are not verified.</p><blockquote>E-004458 <code>dns.question.name</code>: assist.vendor-support.example</blockquote><details><summary>E-004458</summary><pre>{
+  &quot;event_id&quot;: &quot;E-004458&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-02T03:53:41.000Z&quot;,
+  &quot;host&quot;: &quot;WS-10&quot;,
+  &quot;kind&quot;: &quot;network&quot;,
+  &quot;user.name&quot;: &quot;user10&quot;,
+  &quot;rule.name&quot;: &quot;Rare outbound destination&quot;,
+  &quot;threat.technique.id&quot;: &quot;T1071.001&quot;,
+  &quot;event.severity&quot;: &quot;medium&quot;,
+  &quot;process.name&quot;: &quot;VendorAssist.exe&quot;,
+  &quot;destination.ip&quot;: &quot;203.0.113.150&quot;,
+  &quot;destination.port&quot;: 8443,
+  &quot;dns.question.name&quot;: &quot;assist.vendor-support.example&quot;
+}</pre></details></div>
+<h2 id="checker">Evidence checker</h2><p><span class="mark pass">pass</span>0 findings on 2 claims: every citation is an event the agent was shown, every quote is in its field.</p><p class="muted">The checker proves a quote exists, not that the conclusion is right.</p>
+<h2 id="intel">Threat intel: post-triage enrichment (synthetic provider answers)</h2><p>Source: fixtures. Indicators come only from events the verdict cites. The verdict did not use this step: it ran after triage, in plain code.</p><table class="stack"><thead><tr><th>Type</th><th>Value</th><th>From events</th><th>Decision</th><th>Rule</th><th>Providers (synthetic)</th></tr></thead><tbody><tr><td data-label="Type">domain</td><td data-label="Value"><code>assist.vendor-support.example</code></td><td data-label="From events">E-004458</td><td data-label="Decision"><span class="bad">contain</span></td><td data-label="Rule">PROVIDER_MALICIOUS</td><td data-label="Providers (synthetic)">otx: ok <span class="muted">pulse_count=11</span><br>vt: ok <span class="muted">harmless=68; malicious=10; suspicious=2</span></td></tr><tr><td data-label="Type">ipv4</td><td data-label="Value"><code>203.0.113.150</code></td><td data-label="From events">E-004458</td><td data-label="Decision"><span class="bad">contain</span></td><td data-label="Rule">PROVIDER_MALICIOUS</td><td data-label="Providers (synthetic)">abuseipdb: ok <span class="muted">abuse_score=94; total_reports=23</span><br>otx: ok <span class="muted">pulse_count=9</span><br>vt: ok <span class="muted">harmless=72; malicious=11; suspicious=2</span></td></tr><tr><td data-label="Type">sha256</td><td data-label="Value"><code>dd361d90d9ef2a7fcfcdd019d89bf756d8d47aac79b1b1f63d33dab59b725a2d</code></td><td data-label="From events">E-004457</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=55; malicious=0; suspicious=0</span></td></tr></tbody></table>
+<h2 id="actions">Recommended actions and recorded approvals</h2><div class="scroll"><table><thead><tr><th>id</th><th>action</th><th>target</th><th>reason</th><th>citations</th><th>status</th></tr></thead><tbody><tr><td>ACT-001</td><td>open_ticket</td><td>WS-10</td><td>Ask the client whether VendorAssist.exe is an approved remote-support tool, and whether user10 was active at 03:53 UTC. If it is not approved, isolate WS-10 and block 203.0.113.150.</td><td>E-004457, E-004458</td><td>not executed</td></tr></tbody></table></div><p class="muted">Approvals are dry runs: nothing is sent or executed. Approver names are self-declared (--as is free text).</p>
+<p class="muted">tokens: input 10, cache write 5566, cache read 11886, output 1792 &middot; cost $0.034232</p>
+</main>
+</body></html>

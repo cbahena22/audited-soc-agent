@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-UYhcdWeeLaagSZyJd9b53FhkZ9cKouxN9vhOjiGOsjw='; script-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'"><meta name="referrer" content="no-referrer"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Case A-029 - audited SOC agent demo</title><style>:root { --bg: #fbfbf9; --fg: #1d1f21; --muted: #5c6166; --line: #d9dcd6; --card: #ffffff;
+        --bad: #a3221b; --bad-bg: #fdecea; --ok: #1f6f43; --warn: #8a5a00; --banner: #eef2f7; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #16181a; --fg: #e6e6e3; --muted: #a2a7ab; --line: #34383c; --card: #1e2124;
+          --bad: #ff8a80; --bad-bg: #3a1d1b; --ok: #7fd1a0; --warn: #f0c05a; --banner: #23303d; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; }
+main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+h1 { font-size: 1.4rem; margin: 0 0 4px; } h2 { font-size: 1.1rem; margin: 28px 0 8px; }
+.muted { color: var(--muted); }
+.banner { background: var(--banner); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; margin: 12px 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; margin: 8px 0; }
+.verdict { font-size: 1.2rem; font-weight: 600; }
+.verdict.malicious { color: var(--bad); } .verdict.benign { color: var(--ok); } .verdict.needs_human { color: var(--warn); }
+.injection { background: var(--bad-bg); border: 2px solid var(--bad); border-radius: 8px; padding: 12px 16px; }
+.injection h2 { color: var(--bad); margin-top: 0; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 16px; margin: 0; } dt { color: var(--muted); }
+details { margin: 4px 0; } summary { cursor: pointer; font-family: ui-monospace, monospace; }
+pre { white-space: pre-wrap; word-break: break-word; background: var(--bg); border: 1px solid var(--line);
+      border-radius: 6px; padding: 8px; font: 13px/1.4 ui-monospace, monospace; overflow-x: auto; }
+blockquote { margin: 4px 0; padding-left: 10px; border-left: 3px solid var(--line); }
+table { border-collapse: collapse; width: 100%; } th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tag { font-size: 0.8rem; border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; color: var(--muted); }
+:root { --link: #1f4f8a; }
+@media (prefers-color-scheme: dark) { :root { --link: #9cc3ff; } }
+a { color: var(--link); }
+header.site { background: var(--card); border-bottom: 1px solid var(--line); }
+header.site div { max-width: 1080px; margin: 0 auto; padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 4px 20px; align-items: baseline; }
+.brand { margin: 0; font-weight: 600; }
+nav a { margin-right: 14px; white-space: nowrap; }
+nav a[aria-current="page"] { color: var(--fg); font-weight: 600; text-decoration: underline; }
+nav.sub { margin: 4px 0 16px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+main { max-width: 1080px; }
+dd { margin: 0; overflow-wrap: anywhere; }
+code, .hash { font-family: ui-monospace, monospace; font-size: 0.85em; overflow-wrap: anywhere; word-break: break-all; }
+.mark { display: inline-block; min-width: 3.4em; text-align: center; font-size: 0.8rem; font-weight: 600; border: 1px solid currentColor; border-radius: 4px; padding: 0 6px; margin-right: 6px; }
+.mark.pass { color: var(--ok); } .mark.note { color: var(--warn); } .mark.fail { color: var(--bad); }
+.honest { border-left: 4px solid var(--warn); }
+.honest ul, .card ul { margin: 4px 0; padding-left: 20px; }
+.bad { color: var(--bad); font-weight: 600; } .ok { color: var(--ok); }
+.scroll { overflow-x: auto; }
+.row h3 { font-size: 1rem; margin: 0 0 4px; }
+@media (max-width: 640px) {
+  table.stack thead { display: none; }
+  table.stack, table.stack tbody, table.stack tr, table.stack td { display: block; width: 100%; }
+  table.stack tr { background: var(--card); border: 1px solid var(--line); border-radius: 8px; margin: 8px 0; padding: 4px 10px; }
+  table.stack td { border: 0; padding: 2px 0; overflow-wrap: anywhere; }
+  table.stack td::before { content: attr(data-label) ": "; color: var(--muted); }
+  dl { grid-template-columns: 1fr; }
+}</style></head>
+<body>
+<header class="site"><div><p class="brand">Harbor Watch MSSP: AI triage, audited</p><nav aria-label="site"><a href="index.html">Alert queue</a><a href="checklist.html">Buyer's checklist</a><a href="about.html">About this demo</a></nav></div></header>
+<main>
+<p class="banner">Synthetic data. Run 20261109T195806Z-mock, replay of recorded run live-20261028 (claude-sonnet-5-5, recorded 2026-10-28): $0, no model call. Nothing here was executed anywhere.</p>
+<nav class="sub" aria-label="this alert"><a href="index.html">&larr; queue</a><a href="case-A-029.html" aria-current="page">Case</a><a href="trust-A-029.html">Trust report</a><a href="audit-A-029.html">Audit trail</a></nav>
+<h1>Case A-029: Archive created by a script</h1>
+<p class="banner"><span class="mark pass">pass</span>Chain verified when this page was built, head <span class="hash">fdf4f7ea351197404c09ed0baba222fe0b518664a4bb44a7216606ca836cfb5c</span>; re-run <code>asa audit verify out/runs/20261109T195806Z-mock/A-029</code></p>
+<p class="muted">run 20261109T195806Z-mock &middot; claude-sonnet-5-5 &middot; effort high</p>
+<div class="card"><dl><dt>rule</dt><dd>Archive created by a script</dd><dt>technique</dt><dd>T1560.001</dd><dt>severity</dt><dd>medium</dd><dt>host</dt><dd>WS-02</dd><dt>user</dt><dd>SYSTEM</dd><dt>time</dt><dd>2026-03-02T16:17:22.000Z</dd><dt>trigger event</dt><dd>E-004477</dd></dl></div>
+<div class="card"><p class="verdict benign">Verdict: benign <span class="tag">confidence medium</span></p><p>The Task Scheduler service (svchost -s Schedule) started a SYSTEM PowerShell script, C:\ProgramData\HarborWatch\rotate-logs.ps1. The script wrote a zip into its own logs folder. I found no staging, no sensitive paths, no child processes and no unusual network activity on WS-02 around that time. I found no earlier runs of the script in the prior 24 hours, so the next shift could confirm with the client that this scheduled task is expected.</p></div>
+<h2 id="claims">Claims and evidence</h2><p class="muted">Each claim with the events it cites; open an event id to see the event as the agent's tools showed it.</p>
+<div class="card"><p><strong>1.</strong> The script was launched by the Task Scheduler service running as SYSTEM, which fits a scheduled maintenance job and not interactive attacker activity.</p><blockquote>E-004476 <code>process.command_line</code>: svchost.exe -k netsvcs -p -s Schedule</blockquote><blockquote>E-004477 <code>process.command_line</code>: powershell.exe -NoProfile -File C:\ProgramData\HarborWatch\rotate-logs.ps1</blockquote><details><summary>E-004476</summary><pre>{
+  &quot;event_id&quot;: &quot;E-004476&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-02T16:17:18.000Z&quot;,
+  &quot;host&quot;: &quot;WS-02&quot;,
+  &quot;kind&quot;: &quot;process&quot;,
+  &quot;user.name&quot;: &quot;SYSTEM&quot;,
+  &quot;process.name&quot;: &quot;svchost.exe&quot;,
+  &quot;process.entity_id&quot;: &quot;P-f2fc387e739a&quot;,
+  &quot;process.command_line&quot;: &quot;svchost.exe -k netsvcs -p -s Schedule&quot;,
+  &quot;process.hash.sha256&quot;: &quot;029a8d229b97051acb38443c7a845dd819d231c8800fbd8ae0b1331376d1c71e&quot;,
+  &quot;process.parent.name&quot;: &quot;services.exe&quot;,
+  &quot;process.parent.entity_id&quot;: &quot;P-ba5500d9b637&quot;
+}</pre></details><details><summary>E-004477</summary><pre>{
+  &quot;event_id&quot;: &quot;E-004477&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-02T16:17:22.000Z&quot;,
+  &quot;host&quot;: &quot;WS-02&quot;,
+  &quot;kind&quot;: &quot;process&quot;,
+  &quot;user.name&quot;: &quot;SYSTEM&quot;,
+  &quot;rule.name&quot;: &quot;Archive created by a script&quot;,
+  &quot;threat.technique.id&quot;: &quot;T1560.001&quot;,
+  &quot;event.severity&quot;: &quot;medium&quot;,
+  &quot;process.name&quot;: &quot;powershell.exe&quot;,
+  &quot;process.entity_id&quot;: &quot;P-3c7efa052992&quot;,
+  &quot;process.command_line&quot;: &quot;powershell.exe -NoProfile -File C:\\ProgramData\\HarborWatch\\rotate-logs.ps1&quot;,
+  &quot;process.hash.sha256&quot;: &quot;934d8659a93d256f23899ac6455d014b4f2f9670d6e5181a59f85d557a62d95f&quot;,
+  &quot;process.parent.name&quot;: &quot;svchost.exe&quot;,
+  &quot;process.parent.entity_id&quot;: &quot;P-f2fc387e739a&quot;
+}</pre></details></div>
+<div class="card"><p><strong>2.</strong> The archive was written to the script&#x27;s own logs directory under ProgramData and is named by date, consistent with log rotation. It was not staged from user data.</p><blockquote>E-004478 <code>file.path</code>: C:\ProgramData\HarborWatch\logs\archive-20260302.zip</blockquote><details><summary>E-004478</summary><pre>{
+  &quot;event_id&quot;: &quot;E-004478&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-02T16:17:52.000Z&quot;,
+  &quot;host&quot;: &quot;WS-02&quot;,
+  &quot;kind&quot;: &quot;file&quot;,
+  &quot;user.name&quot;: &quot;SYSTEM&quot;,
+  &quot;process.name&quot;: &quot;powershell.exe&quot;,
+  &quot;process.entity_id&quot;: &quot;P-3c7efa052992&quot;,
+  &quot;file.path&quot;: &quot;C:\\ProgramData\\HarborWatch\\logs\\archive-20260302.zip&quot;,
+  &quot;file.name&quot;: &quot;archive-20260302.zip&quot;
+}</pre></details></div>
+<div class="card"><p><strong>3.</strong> The PowerShell process spawned no children. Network activity on WS-02 in the surrounding hours was only ordinary Outlook and Edge traffic to corporate and weather hosts, with no exfiltration indicators.</p><blockquote>E-001138 <code>dns.question.name</code>: weather.example</blockquote><details><summary>E-001118</summary><pre>{
+  &quot;event_id&quot;: &quot;E-001118&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-02T16:07:07.158Z&quot;,
+  &quot;host&quot;: &quot;WS-02&quot;,
+  &quot;kind&quot;: &quot;network&quot;,
+  &quot;user.name&quot;: &quot;user02&quot;,
+  &quot;process.name&quot;: &quot;outlook.exe&quot;,
+  &quot;destination.ip&quot;: &quot;192.0.2.75&quot;,
+  &quot;destination.port&quot;: 443,
+  &quot;dns.question.name&quot;: &quot;mail.corp.example&quot;
+}</pre></details><details><summary>E-001128</summary><pre>{
+  &quot;event_id&quot;: &quot;E-001128&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-02T16:26:18.530Z&quot;,
+  &quot;host&quot;: &quot;WS-02&quot;,
+  &quot;kind&quot;: &quot;network&quot;,
+  &quot;user.name&quot;: &quot;user02&quot;,
+  &quot;process.name&quot;: &quot;outlook.exe&quot;,
+  &quot;destination.ip&quot;: &quot;192.0.2.68&quot;,
+  &quot;destination.port&quot;: 443,
+  &quot;dns.question.name&quot;: &quot;mail.corp.example&quot;
+}</pre></details><details><summary>E-001138</summary><pre>{
+  &quot;event_id&quot;: &quot;E-001138&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-02T16:27:08.215Z&quot;,
+  &quot;host&quot;: &quot;WS-02&quot;,
+  &quot;kind&quot;: &quot;network&quot;,
+  &quot;user.name&quot;: &quot;user02&quot;,
+  &quot;process.name&quot;: &quot;msedge.exe&quot;,
+  &quot;destination.ip&quot;: &quot;192.0.2.69&quot;,
+  &quot;destination.port&quot;: 443,
+  &quot;dns.question.name&quot;: &quot;weather.example&quot;
+}</pre></details></div>
+<h2 id="checker">Evidence checker</h2><p><span class="mark pass">pass</span>0 findings on 3 claims: every citation is an event the agent was shown, every quote is in its field.</p><p class="muted">The checker proves a quote exists, not that the conclusion is right.</p>
+<h2 id="intel">Threat intel: post-triage enrichment (synthetic provider answers)</h2><p>Source: fixtures. Indicators come only from events the verdict cites. The verdict did not use this step: it ran after triage, in plain code.</p><table class="stack"><thead><tr><th>Type</th><th>Value</th><th>From events</th><th>Decision</th><th>Rule</th><th>Providers (synthetic)</th></tr></thead><tbody><tr><td data-label="Type">domain</td><td data-label="Value"><code>mail.corp.example</code></td><td data-label="From events">E-001118, E-001128</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">ALLOWLISTED</td><td data-label="Providers (synthetic)"></td></tr><tr><td data-label="Type">domain</td><td data-label="Value"><code>weather.example</code></td><td data-label="From events">E-001138</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=73; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">ipv4</td><td data-label="Value"><code>192.0.2.68</code></td><td data-label="From events">E-001128</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">abuseipdb: ok <span class="muted">abuse_score=0; total_reports=0</span><br>otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=63; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">ipv4</td><td data-label="Value"><code>192.0.2.69</code></td><td data-label="From events">E-001138</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">abuseipdb: ok <span class="muted">abuse_score=0; total_reports=0</span><br>otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=78; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">ipv4</td><td data-label="Value"><code>192.0.2.75</code></td><td data-label="From events">E-001118</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">abuseipdb: ok <span class="muted">abuse_score=0; total_reports=0</span><br>otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=77; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">sha256</td><td data-label="Value"><code>029a8d229b97051acb38443c7a845dd819d231c8800fbd8ae0b1331376d1c71e</code></td><td data-label="From events">E-004476</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=73; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">sha256</td><td data-label="Value"><code>934d8659a93d256f23899ac6455d014b4f2f9670d6e5181a59f85d557a62d95f</code></td><td data-label="From events">E-004477</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=78; malicious=0; suspicious=0</span></td></tr></tbody></table>
+<h2 id="actions">Recommended actions and recorded approvals</h2><div class="scroll"><table><thead><tr><th>id</th><th>action</th><th>target</th><th>reason</th><th>citations</th><th>status</th></tr></thead><tbody><tr><td>ACT-001</td><td>open_ticket</td><td>WS-02</td><td>Low-priority check with the client that the HarborWatch rotate-logs scheduled task is expected. No earlier runs were visible in the prior 24 hours.</td><td>E-004477, E-004478</td><td>not executed</td></tr></tbody></table></div><p class="muted">Approvals are dry runs: nothing is sent or executed. Approver names are self-declared (--as is free text).</p>
+<p class="muted">tokens: input 8, cache write 6676, cache read 8649, output 1598 &middot; cost $0.034416</p>
+</main>
+</body></html>

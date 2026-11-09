@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-UYhcdWeeLaagSZyJd9b53FhkZ9cKouxN9vhOjiGOsjw='; script-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'"><meta name="referrer" content="no-referrer"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Audit trail A-001 - audited SOC agent demo</title><style>:root { --bg: #fbfbf9; --fg: #1d1f21; --muted: #5c6166; --line: #d9dcd6; --card: #ffffff;
+        --bad: #a3221b; --bad-bg: #fdecea; --ok: #1f6f43; --warn: #8a5a00; --banner: #eef2f7; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #16181a; --fg: #e6e6e3; --muted: #a2a7ab; --line: #34383c; --card: #1e2124;
+          --bad: #ff8a80; --bad-bg: #3a1d1b; --ok: #7fd1a0; --warn: #f0c05a; --banner: #23303d; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; }
+main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+h1 { font-size: 1.4rem; margin: 0 0 4px; } h2 { font-size: 1.1rem; margin: 28px 0 8px; }
+.muted { color: var(--muted); }
+.banner { background: var(--banner); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; margin: 12px 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; margin: 8px 0; }
+.verdict { font-size: 1.2rem; font-weight: 600; }
+.verdict.malicious { color: var(--bad); } .verdict.benign { color: var(--ok); } .verdict.needs_human { color: var(--warn); }
+.injection { background: var(--bad-bg); border: 2px solid var(--bad); border-radius: 8px; padding: 12px 16px; }
+.injection h2 { color: var(--bad); margin-top: 0; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 16px; margin: 0; } dt { color: var(--muted); }
+details { margin: 4px 0; } summary { cursor: pointer; font-family: ui-monospace, monospace; }
+pre { white-space: pre-wrap; word-break: break-word; background: var(--bg); border: 1px solid var(--line);
+      border-radius: 6px; padding: 8px; font: 13px/1.4 ui-monospace, monospace; overflow-x: auto; }
+blockquote { margin: 4px 0; padding-left: 10px; border-left: 3px solid var(--line); }
+table { border-collapse: collapse; width: 100%; } th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tag { font-size: 0.8rem; border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; color: var(--muted); }
+:root { --link: #1f4f8a; }
+@media (prefers-color-scheme: dark) { :root { --link: #9cc3ff; } }
+a { color: var(--link); }
+header.site { background: var(--card); border-bottom: 1px solid var(--line); }
+header.site div { max-width: 1080px; margin: 0 auto; padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 4px 20px; align-items: baseline; }
+.brand { margin: 0; font-weight: 600; }
+nav a { margin-right: 14px; white-space: nowrap; }
+nav a[aria-current="page"] { color: var(--fg); font-weight: 600; text-decoration: underline; }
+nav.sub { margin: 4px 0 16px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+main { max-width: 1080px; }
+dd { margin: 0; overflow-wrap: anywhere; }
+code, .hash { font-family: ui-monospace, monospace; font-size: 0.85em; overflow-wrap: anywhere; word-break: break-all; }
+.mark { display: inline-block; min-width: 3.4em; text-align: center; font-size: 0.8rem; font-weight: 600; border: 1px solid currentColor; border-radius: 4px; padding: 0 6px; margin-right: 6px; }
+.mark.pass { color: var(--ok); } .mark.note { color: var(--warn); } .mark.fail { color: var(--bad); }
+.honest { border-left: 4px solid var(--warn); }
+.honest ul, .card ul { margin: 4px 0; padding-left: 20px; }
+.bad { color: var(--bad); font-weight: 600; } .ok { color: var(--ok); }
+.scroll { overflow-x: auto; }
+.row h3 { font-size: 1rem; margin: 0 0 4px; }
+@media (max-width: 640px) {
+  table.stack thead { display: none; }
+  table.stack, table.stack tbody, table.stack tr, table.stack td { display: block; width: 100%; }
+  table.stack tr { background: var(--card); border: 1px solid var(--line); border-radius: 8px; margin: 8px 0; padding: 4px 10px; }
+  table.stack td { border: 0; padding: 2px 0; overflow-wrap: anywhere; }
+  table.stack td::before { content: attr(data-label) ": "; color: var(--muted); }
+  dl { grid-template-columns: 1fr; }
+}</style></head>
+<body>
+<header class="site"><div><p class="brand">Harbor Watch MSSP: AI triage, audited</p><nav aria-label="site"><a href="index.html">Alert queue</a><a href="checklist.html">Buyer's checklist</a><a href="about.html">About this demo</a></nav></div></header>
+<main>
+<p class="banner">Synthetic data. Run 20261109T195806Z-mock, replay of recorded run live-20261028 (claude-sonnet-5-5, recorded 2026-10-28): $0, no model call. Nothing here was executed anywhere.</p>
+<nav class="sub" aria-label="this alert"><a href="index.html">&larr; queue</a><a href="case-A-001.html">Case</a><a href="trust-A-001.html">Trust report</a><a href="audit-A-001.html" aria-current="page">Audit trail</a></nav>
+<h1>Audit trail A-001: PowerShell started by a scheduled task</h1>
+<p class="banner"><span class="mark pass">pass</span>Chain verified when this page was built, head <span class="hash">316f92d557dbf10b6441b85199d92cd82b6ee81f9a5bac440fa6dca6efbc6547</span>; re-run <code>asa audit verify out/runs/20261109T195806Z-mock/A-001</code></p>
+<p class="muted">One line per step, each holding the hash of the line before it. Lines record hashes and short summaries, not copies of tool output. The replay writes the trail; a live run writes it as it goes.</p>
+<table class="stack" id="chain"><thead><tr><th>Seq</th><th>At</th><th>Kind</th><th>Actor</th><th>Summary</th><th>Data hash</th><th>Line hash</th></tr></thead><tbody><tr><td data-label="Seq">1</td><td data-label="At">2026-10-29T04:12:26Z</td><td data-label="Kind">run_start</td><td data-label="Actor">code</td><td data-label="Summary">start A-001: replay of live-20261028 (claude-sonnet-5-5, effort high), $0</td><td data-label="Data hash"><span class="hash">47ebe6cedf2967ca...</span></td><td data-label="Line hash"><span class="hash">533dbefd566be086...</span></td></tr><tr><td data-label="Seq">2</td><td data-label="At">2026-10-29T04:12:26Z</td><td data-label="Kind">model_turn</td><td data-label="Actor">agent</td><td data-label="Summary">turn 1: tool_use, 3 tool calls, 4 in / 297 out tokens, $0.0103</td><td data-label="Data hash"><span class="hash">77c556612c85d8e4...</span></td><td data-label="Line hash"><span class="hash">5abb933b8bb76e30...</span></td></tr><tr><td data-label="Seq">3</td><td data-label="At">2026-10-29T04:12:26Z</td><td data-label="Kind">tool_call</td><td data-label="Actor">agent</td><td data-label="Summary">get_alert(alert_id=A-001)</td><td data-label="Data hash"><span class="hash">ae5dca545aafd1a4...</span></td><td data-label="Line hash"><span class="hash">50b81209f6fd6f9e...</span></td></tr><tr><td data-label="Seq">4</td><td data-label="At">2026-10-29T04:12:26Z</td><td data-label="Kind">tool_result</td><td data-label="Actor">code</td><td data-label="Summary">get_alert -&gt; ok</td><td data-label="Data hash"><span class="hash">037625e79999b99c...</span></td><td data-label="Line hash"><span class="hash">67186d610f80f3ff...</span></td></tr><tr><td data-label="Seq">5</td><td data-label="At">2026-10-29T04:12:26Z</td><td data-label="Kind">tool_call</td><td data-label="Actor">agent</td><td data-label="Summary">host_timeline(around=2026-03-04T15:20:12Z, host=WS-04, minutes=15)</td><td data-label="Data hash"><span class="hash">da19a5fb4226cd85...</span></td><td data-label="Line hash"><span class="hash">32ba46e716243217...</span></td></tr><tr><td data-label="Seq">6</td><td data-label="At">2026-10-29T04:12:26Z</td><td data-label="Kind">tool_result</td><td data-label="Actor">code</td><td data-label="Summary">host_timeline -&gt; 6 events</td><td data-label="Data hash"><span class="hash">59134795e15a6600...</span></td><td data-label="Line hash"><span class="hash">e7f0078dd0e2ecea...</span></td></tr><tr><td data-label="Seq">7</td><td data-label="At">2026-10-29T04:12:26Z</td><td data-label="Kind">tool_call</td><td data-label="Actor">agent</td><td data-label="Summary">network_connections(end=2026-03-04T15:50:00Z, host=WS-04, limit=50, start=2026-03-04T14:50:00Z)</td><td data-label="Data hash"><span class="hash">f3ff0a3e2638f719...</span></td><td data-label="Line hash"><span class="hash">de0e332ed22f6938...</span></td></tr><tr><td data-label="Seq">8</td><td data-label="At">2026-10-29T04:12:26Z</td><td data-label="Kind">tool_result</td><td data-label="Actor">code</td><td data-label="Summary">network_connections -&gt; 3 events</td><td data-label="Data hash"><span class="hash">768e12ed155f1e69...</span></td><td data-label="Line hash"><span class="hash">460570bd3247de1c...</span></td></tr><tr><td data-label="Seq">9</td><td data-label="At">2026-10-29T04:12:29Z</td><td data-label="Kind">model_turn</td><td data-label="Actor">agent</td><td data-label="Summary">turn 2: tool_use, 1 tool calls, 2 in / 239 out tokens, $0.0081</td><td data-label="Data hash"><span class="hash">9ebb96a5527f7d09...</span></td><td data-label="Line hash"><span class="hash">00e00b2c04ae6387...</span></td></tr><tr><td data-label="Seq">10</td><td data-label="At">2026-10-29T04:12:29Z</td><td data-label="Kind">tool_call</td><td data-label="Actor">agent</td><td data-label="Summary">search_events(end=2026-03-04T15:00:00Z, field=process.command_line, host=WS-04, limit=20, start=2026-03-03T15:00:00Z, va</td><td data-label="Data hash"><span class="hash">f3595287b12d23d2...</span></td><td data-label="Line hash"><span class="hash">5ba7308d1243bc41...</span></td></tr><tr><td data-label="Seq">11</td><td data-label="At">2026-10-29T04:12:29Z</td><td data-label="Kind">tool_result</td><td data-label="Actor">code</td><td data-label="Summary">search_events -&gt; 0 events</td><td data-label="Data hash"><span class="hash">9e90d8b359f4fd9a...</span></td><td data-label="Line hash"><span class="hash">e314a15254dc05d0...</span></td></tr><tr><td data-label="Seq">12</td><td data-label="At">2026-10-29T04:12:38Z</td><td data-label="Kind">model_turn</td><td data-label="Actor">agent</td><td data-label="Summary">turn 3: tool_use, 1 tool calls, 2 in / 1098 out tokens, $0.0126</td><td data-label="Data hash"><span class="hash">ebc619e7568a2100...</span></td><td data-label="Line hash"><span class="hash">69cea0178a7a4469...</span></td></tr><tr><td data-label="Seq">13</td><td data-label="At">2026-10-29T04:12:38Z</td><td data-label="Kind">verdict</td><td data-label="Actor">agent</td><td data-label="Summary">verdict needs_human (medium), 3 claims, 1 injection reports, 1 recommended actions</td><td data-label="Data hash"><span class="hash">9548a33b05a620be...</span></td><td data-label="Line hash"><span class="hash">be9f474f52b3f1b2...</span></td></tr><tr><td data-label="Seq">14</td><td data-label="At">2026-10-29T04:12:38Z</td><td data-label="Kind">run_end</td><td data-label="Actor">code</td><td data-label="Summary">end A-001: needs_human, 3 turns, 4 tool calls, $0.0311</td><td data-label="Data hash"><span class="hash">2c234cce00299700...</span></td><td data-label="Line hash"><span class="hash">9486ae810abb6d12...</span></td></tr><tr><td data-label="Seq">15</td><td data-label="At">2026-10-29T04:12:38Z</td><td data-label="Kind">intel</td><td data-label="Actor">code</td><td data-label="Summary">8 indicators from cited events: 0 contain, 0 review, 8 clear (post-triage enrichment (synthetic provider answers))</td><td data-label="Data hash"><span class="hash">e252b56aad215e3b...</span></td><td data-label="Line hash"><span class="hash">0d79438e5e64a9f5...</span></td></tr><tr><td data-label="Seq">16</td><td data-label="At">2026-10-29T04:12:38Z</td><td data-label="Kind">check</td><td data-label="Actor">code</td><td data-label="Summary">check: 0 findings on 3 claims</td><td data-label="Data hash"><span class="hash">3d7f7e0adfe4e01e...</span></td><td data-label="Line hash"><span class="hash">316f92d557dbf10b...</span></td></tr></tbody></table>
+</main>
+</body></html>

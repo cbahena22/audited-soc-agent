@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-UYhcdWeeLaagSZyJd9b53FhkZ9cKouxN9vhOjiGOsjw='; script-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'"><meta name="referrer" content="no-referrer"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Case A-021 - audited SOC agent demo</title><style>:root { --bg: #fbfbf9; --fg: #1d1f21; --muted: #5c6166; --line: #d9dcd6; --card: #ffffff;
+        --bad: #a3221b; --bad-bg: #fdecea; --ok: #1f6f43; --warn: #8a5a00; --banner: #eef2f7; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #16181a; --fg: #e6e6e3; --muted: #a2a7ab; --line: #34383c; --card: #1e2124;
+          --bad: #ff8a80; --bad-bg: #3a1d1b; --ok: #7fd1a0; --warn: #f0c05a; --banner: #23303d; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; }
+main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+h1 { font-size: 1.4rem; margin: 0 0 4px; } h2 { font-size: 1.1rem; margin: 28px 0 8px; }
+.muted { color: var(--muted); }
+.banner { background: var(--banner); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; margin: 12px 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; margin: 8px 0; }
+.verdict { font-size: 1.2rem; font-weight: 600; }
+.verdict.malicious { color: var(--bad); } .verdict.benign { color: var(--ok); } .verdict.needs_human { color: var(--warn); }
+.injection { background: var(--bad-bg); border: 2px solid var(--bad); border-radius: 8px; padding: 12px 16px; }
+.injection h2 { color: var(--bad); margin-top: 0; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 16px; margin: 0; } dt { color: var(--muted); }
+details { margin: 4px 0; } summary { cursor: pointer; font-family: ui-monospace, monospace; }
+pre { white-space: pre-wrap; word-break: break-word; background: var(--bg); border: 1px solid var(--line);
+      border-radius: 6px; padding: 8px; font: 13px/1.4 ui-monospace, monospace; overflow-x: auto; }
+blockquote { margin: 4px 0; padding-left: 10px; border-left: 3px solid var(--line); }
+table { border-collapse: collapse; width: 100%; } th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tag { font-size: 0.8rem; border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; color: var(--muted); }
+:root { --link: #1f4f8a; }
+@media (prefers-color-scheme: dark) { :root { --link: #9cc3ff; } }
+a { color: var(--link); }
+header.site { background: var(--card); border-bottom: 1px solid var(--line); }
+header.site div { max-width: 1080px; margin: 0 auto; padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 4px 20px; align-items: baseline; }
+.brand { margin: 0; font-weight: 600; }
+nav a { margin-right: 14px; white-space: nowrap; }
+nav a[aria-current="page"] { color: var(--fg); font-weight: 600; text-decoration: underline; }
+nav.sub { margin: 4px 0 16px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+main { max-width: 1080px; }
+dd { margin: 0; overflow-wrap: anywhere; }
+code, .hash { font-family: ui-monospace, monospace; font-size: 0.85em; overflow-wrap: anywhere; word-break: break-all; }
+.mark { display: inline-block; min-width: 3.4em; text-align: center; font-size: 0.8rem; font-weight: 600; border: 1px solid currentColor; border-radius: 4px; padding: 0 6px; margin-right: 6px; }
+.mark.pass { color: var(--ok); } .mark.note { color: var(--warn); } .mark.fail { color: var(--bad); }
+.honest { border-left: 4px solid var(--warn); }
+.honest ul, .card ul { margin: 4px 0; padding-left: 20px; }
+.bad { color: var(--bad); font-weight: 600; } .ok { color: var(--ok); }
+.scroll { overflow-x: auto; }
+.row h3 { font-size: 1rem; margin: 0 0 4px; }
+@media (max-width: 640px) {
+  table.stack thead { display: none; }
+  table.stack, table.stack tbody, table.stack tr, table.stack td { display: block; width: 100%; }
+  table.stack tr { background: var(--card); border: 1px solid var(--line); border-radius: 8px; margin: 8px 0; padding: 4px 10px; }
+  table.stack td { border: 0; padding: 2px 0; overflow-wrap: anywhere; }
+  table.stack td::before { content: attr(data-label) ": "; color: var(--muted); }
+  dl { grid-template-columns: 1fr; }
+}</style></head>
+<body>
+<header class="site"><div><p class="brand">Harbor Watch MSSP: AI triage, audited</p><nav aria-label="site"><a href="index.html">Alert queue</a><a href="checklist.html">Buyer's checklist</a><a href="about.html">About this demo</a></nav></div></header>
+<main>
+<p class="banner">Synthetic data. Run 20261109T195806Z-mock, replay of recorded run live-20261028 (claude-sonnet-5-5, recorded 2026-10-28): $0, no model call. Nothing here was executed anywhere.</p>
+<nav class="sub" aria-label="this alert"><a href="index.html">&larr; queue</a><a href="case-A-021.html" aria-current="page">Case</a><a href="trust-A-021.html">Trust report</a><a href="audit-A-021.html">Audit trail</a></nav>
+<h1>Case A-021: Interactive logon by a service account</h1>
+<p class="banner"><span class="mark pass">pass</span>Chain verified when this page was built, head <span class="hash">d624e90357c4760ca6e4f683b56af04a60029c9f0e009b209bff8d1d3324cc67</span>; re-run <code>asa audit verify out/runs/20261109T195806Z-mock/A-021</code></p>
+<p class="muted">run 20261109T195806Z-mock &middot; claude-sonnet-5-5 &middot; effort high</p>
+<div class="card"><dl><dt>rule</dt><dd>Interactive logon by a service account</dd><dt>technique</dt><dd>T1078.002</dd><dt>severity</dt><dd>medium</dd><dt>host</dt><dd>SRV-02</dd><dt>user</dt><dd>svc-backup</dd><dt>time</dt><dd>2026-03-03T02:11:40.000Z</dd><dt>trigger event</dt><dd>E-000301</dd></dl></div>
+<div class="card"><p class="verdict needs_human">Verdict: needs_human <span class="tag">confidence low</span></p><p>svc-backup had a successful remote_interactive (RDP-style) logon to SRV-02 at 02:11:40 UTC from 203.0.113.40. Every other svc-backup logon I saw came from 192.0.2.x addresses and was interactive, unlock or network type. The events show no follow-on activity from the logon, and SRV-02 has no network events in the 01:30–03:30 window. That is not enough to call it an intrusion or to clear it. Someone should ask the client whether 203.0.113.40 and an off-hours remote session by this account are expected, and check the account&#x27;s logon history.</p></div>
+<h2 id="claims">Claims and evidence</h2><p class="muted">Each claim with the events it cites; open an event id to see the event as the agent's tools showed it.</p>
+<div class="card"><p><strong>1.</strong> svc-backup had a successful remote_interactive logon to SRV-02 at 02:11:40 UTC from 203.0.113.40. This is a service account used for a remote interactive session at an off-hours time.</p><blockquote>E-000301 <code>logon.type</code>: remote_interactive</blockquote><blockquote>E-000301 <code>source.ip</code>: 203.0.113.40</blockquote><details><summary>E-000301</summary><pre>{
+  &quot;event_id&quot;: &quot;E-000301&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T02:11:40.000Z&quot;,
+  &quot;host&quot;: &quot;SRV-02&quot;,
+  &quot;kind&quot;: &quot;logon&quot;,
+  &quot;user.name&quot;: &quot;svc-backup&quot;,
+  &quot;rule.name&quot;: &quot;Interactive logon by a service account&quot;,
+  &quot;threat.technique.id&quot;: &quot;T1078.002&quot;,
+  &quot;event.severity&quot;: &quot;medium&quot;,
+  &quot;event.outcome&quot;: &quot;success&quot;,
+  &quot;logon.type&quot;: &quot;remote_interactive&quot;,
+  &quot;source.ip&quot;: &quot;203.0.113.40&quot;
+}</pre></details></div>
+<div class="card"><p><strong>2.</strong> Other svc-backup logons on SRV-02 came from 192.0.2.x addresses and were network, interactive or unlock type. None were remote_interactive and none came from 203.0.113.40. The only event from 203.0.113.40 on SRV-02 on 2026-03-03 is the alert event. The account is also used for routine office-app activity, which makes its baseline noisy.</p><blockquote>E-002064 <code>source.ip</code>: 192.0.2.15</blockquote><blockquote>E-003140 <code>source.ip</code>: 192.0.2.33</blockquote><details><summary>E-002057</summary><pre>{
+  &quot;event_id&quot;: &quot;E-002057&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-02T10:11:42.209Z&quot;,
+  &quot;host&quot;: &quot;SRV-02&quot;,
+  &quot;kind&quot;: &quot;logon&quot;,
+  &quot;user.name&quot;: &quot;svc-backup&quot;,
+  &quot;event.outcome&quot;: &quot;success&quot;,
+  &quot;logon.type&quot;: &quot;network&quot;,
+  &quot;source.ip&quot;: &quot;192.0.2.38&quot;
+}</pre></details><details><summary>E-002064</summary><pre>{
+  &quot;event_id&quot;: &quot;E-002064&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-02T13:24:23.293Z&quot;,
+  &quot;host&quot;: &quot;SRV-02&quot;,
+  &quot;kind&quot;: &quot;logon&quot;,
+  &quot;user.name&quot;: &quot;svc-backup&quot;,
+  &quot;event.outcome&quot;: &quot;success&quot;,
+  &quot;logon.type&quot;: &quot;interactive&quot;,
+  &quot;source.ip&quot;: &quot;192.0.2.15&quot;
+}</pre></details><details><summary>E-002037</summary><pre>{
+  &quot;event_id&quot;: &quot;E-002037&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-02T10:27:33.547Z&quot;,
+  &quot;host&quot;: &quot;SRV-02&quot;,
+  &quot;kind&quot;: &quot;logon&quot;,
+  &quot;user.name&quot;: &quot;svc-backup&quot;,
+  &quot;event.outcome&quot;: &quot;success&quot;,
+  &quot;logon.type&quot;: &quot;unlock&quot;,
+  &quot;source.ip&quot;: &quot;192.0.2.58&quot;
+}</pre></details><details><summary>E-003140</summary><pre>{
+  &quot;event_id&quot;: &quot;E-003140&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T08:20:43.600Z&quot;,
+  &quot;host&quot;: &quot;SRV-02&quot;,
+  &quot;kind&quot;: &quot;logon&quot;,
+  &quot;user.name&quot;: &quot;svc-backup&quot;,
+  &quot;event.outcome&quot;: &quot;success&quot;,
+  &quot;logon.type&quot;: &quot;interactive&quot;,
+  &quot;source.ip&quot;: &quot;192.0.2.33&quot;
+}</pre></details><details><summary>E-000301</summary><pre>{
+  &quot;event_id&quot;: &quot;E-000301&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T02:11:40.000Z&quot;,
+  &quot;host&quot;: &quot;SRV-02&quot;,
+  &quot;kind&quot;: &quot;logon&quot;,
+  &quot;user.name&quot;: &quot;svc-backup&quot;,
+  &quot;rule.name&quot;: &quot;Interactive logon by a service account&quot;,
+  &quot;threat.technique.id&quot;: &quot;T1078.002&quot;,
+  &quot;event.severity&quot;: &quot;medium&quot;,
+  &quot;event.outcome&quot;: &quot;success&quot;,
+  &quot;logon.type&quot;: &quot;remote_interactive&quot;,
+  &quot;source.ip&quot;: &quot;203.0.113.40&quot;
+}</pre></details></div>
+<div class="card"><p><strong>3.</strong> I found no events on SRV-02 between the logon and 07:03 UTC, and no network events from 01:30 to 03:30. The logs show no malicious follow-on such as new processes or outbound connections, but they do not show what the session did either.</p><details><summary>E-000301</summary><pre>{
+  &quot;event_id&quot;: &quot;E-000301&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T02:11:40.000Z&quot;,
+  &quot;host&quot;: &quot;SRV-02&quot;,
+  &quot;kind&quot;: &quot;logon&quot;,
+  &quot;user.name&quot;: &quot;svc-backup&quot;,
+  &quot;rule.name&quot;: &quot;Interactive logon by a service account&quot;,
+  &quot;threat.technique.id&quot;: &quot;T1078.002&quot;,
+  &quot;event.severity&quot;: &quot;medium&quot;,
+  &quot;event.outcome&quot;: &quot;success&quot;,
+  &quot;logon.type&quot;: &quot;remote_interactive&quot;,
+  &quot;source.ip&quot;: &quot;203.0.113.40&quot;
+}</pre></details><details><summary>E-003167</summary><pre>{
+  &quot;event_id&quot;: &quot;E-003167&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T07:03:45.668Z&quot;,
+  &quot;host&quot;: &quot;SRV-02&quot;,
+  &quot;kind&quot;: &quot;network&quot;,
+  &quot;user.name&quot;: &quot;svc-backup&quot;,
+  &quot;process.name&quot;: &quot;svchost.exe&quot;,
+  &quot;destination.ip&quot;: &quot;192.0.2.81&quot;,
+  &quot;destination.port&quot;: 443,
+  &quot;dns.question.name&quot;: &quot;news.example&quot;
+}</pre></details></div>
+<h2 id="checker">Evidence checker</h2><p><span class="mark pass">pass</span>0 findings on 3 claims: every citation is an event the agent was shown, every quote is in its field.</p><p class="muted">The checker proves a quote exists, not that the conclusion is right.</p>
+<h2 id="intel">Threat intel: post-triage enrichment (synthetic provider answers)</h2><p>Source: fixtures. Indicators come only from events the verdict cites. The verdict did not use this step: it ran after triage, in plain code.</p><table class="stack"><thead><tr><th>Type</th><th>Value</th><th>From events</th><th>Decision</th><th>Rule</th><th>Providers (synthetic)</th></tr></thead><tbody><tr><td data-label="Type">domain</td><td data-label="Value"><code>news.example</code></td><td data-label="From events">E-003167</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=67; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">ipv4</td><td data-label="Value"><code>192.0.2.15</code></td><td data-label="From events">E-002064</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">abuseipdb: ok <span class="muted">abuse_score=0; total_reports=0</span><br>otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=65; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">ipv4</td><td data-label="Value"><code>192.0.2.33</code></td><td data-label="From events">E-003140</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">abuseipdb: ok <span class="muted">abuse_score=0; total_reports=0</span><br>otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=75; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">ipv4</td><td data-label="Value"><code>192.0.2.38</code></td><td data-label="From events">E-002057</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">abuseipdb: ok <span class="muted">abuse_score=0; total_reports=0</span><br>otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=55; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">ipv4</td><td data-label="Value"><code>192.0.2.58</code></td><td data-label="From events">E-002037</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">abuseipdb: ok <span class="muted">abuse_score=0; total_reports=0</span><br>otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=68; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">ipv4</td><td data-label="Value"><code>192.0.2.81</code></td><td data-label="From events">E-003167</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">abuseipdb: ok <span class="muted">abuse_score=0; total_reports=0</span><br>otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=80; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">ipv4</td><td data-label="Value"><code>203.0.113.40</code></td><td data-label="From events">E-000301</td><td data-label="Decision"><span class="bad">contain</span></td><td data-label="Rule">PROVIDER_MALICIOUS</td><td data-label="Providers (synthetic)">abuseipdb: ok <span class="muted">abuse_score=80; total_reports=20</span><br>otx: ok <span class="muted">pulse_count=6</span><br>vt: ok <span class="muted">harmless=69; malicious=10; suspicious=2</span></td></tr></tbody></table>
+<h2 id="actions">Recommended actions and recorded approvals</h2><div class="scroll"><table><thead><tr><th>id</th><th>action</th><th>target</th><th>reason</th><th>citations</th><th>status</th></tr></thead><tbody><tr><td>ACT-001</td><td>open_ticket</td><td>SRV-02</td><td>Ask the client to confirm whether the 02:11 UTC remote interactive logon by svc-backup from 203.0.113.40 was authorized. Also ask them to review the account&#x27;s other logons and the session&#x27;s activity.</td><td>E-000301</td><td>not executed</td></tr><tr><td>ACT-002</td><td>reset_password</td><td>svc-backup</td><td>Precaution if the client does not recognise the logon: a service account was used for a remote interactive session from an address not seen in its other logons.</td><td>E-000301</td><td>approved as a dry run by scripted demo approval at 2026-10-29T05:00:00Z (name self-declared); not executed</td></tr></tbody></table></div><p class="muted">Approvals are dry runs: nothing is sent or executed. Approver names are self-declared (--as is free text).</p>
+<p class="muted">tokens: input 10, cache write 15832, cache read 10926, output 2485 &middot; cost $0.066635</p>
+</main>
+</body></html>

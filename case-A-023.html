@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-UYhcdWeeLaagSZyJd9b53FhkZ9cKouxN9vhOjiGOsjw='; script-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'"><meta name="referrer" content="no-referrer"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Case A-023 - audited SOC agent demo</title><style>:root { --bg: #fbfbf9; --fg: #1d1f21; --muted: #5c6166; --line: #d9dcd6; --card: #ffffff;
+        --bad: #a3221b; --bad-bg: #fdecea; --ok: #1f6f43; --warn: #8a5a00; --banner: #eef2f7; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #16181a; --fg: #e6e6e3; --muted: #a2a7ab; --line: #34383c; --card: #1e2124;
+          --bad: #ff8a80; --bad-bg: #3a1d1b; --ok: #7fd1a0; --warn: #f0c05a; --banner: #23303d; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; }
+main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+h1 { font-size: 1.4rem; margin: 0 0 4px; } h2 { font-size: 1.1rem; margin: 28px 0 8px; }
+.muted { color: var(--muted); }
+.banner { background: var(--banner); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; margin: 12px 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; margin: 8px 0; }
+.verdict { font-size: 1.2rem; font-weight: 600; }
+.verdict.malicious { color: var(--bad); } .verdict.benign { color: var(--ok); } .verdict.needs_human { color: var(--warn); }
+.injection { background: var(--bad-bg); border: 2px solid var(--bad); border-radius: 8px; padding: 12px 16px; }
+.injection h2 { color: var(--bad); margin-top: 0; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 16px; margin: 0; } dt { color: var(--muted); }
+details { margin: 4px 0; } summary { cursor: pointer; font-family: ui-monospace, monospace; }
+pre { white-space: pre-wrap; word-break: break-word; background: var(--bg); border: 1px solid var(--line);
+      border-radius: 6px; padding: 8px; font: 13px/1.4 ui-monospace, monospace; overflow-x: auto; }
+blockquote { margin: 4px 0; padding-left: 10px; border-left: 3px solid var(--line); }
+table { border-collapse: collapse; width: 100%; } th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tag { font-size: 0.8rem; border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; color: var(--muted); }
+:root { --link: #1f4f8a; }
+@media (prefers-color-scheme: dark) { :root { --link: #9cc3ff; } }
+a { color: var(--link); }
+header.site { background: var(--card); border-bottom: 1px solid var(--line); }
+header.site div { max-width: 1080px; margin: 0 auto; padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 4px 20px; align-items: baseline; }
+.brand { margin: 0; font-weight: 600; }
+nav a { margin-right: 14px; white-space: nowrap; }
+nav a[aria-current="page"] { color: var(--fg); font-weight: 600; text-decoration: underline; }
+nav.sub { margin: 4px 0 16px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+main { max-width: 1080px; }
+dd { margin: 0; overflow-wrap: anywhere; }
+code, .hash { font-family: ui-monospace, monospace; font-size: 0.85em; overflow-wrap: anywhere; word-break: break-all; }
+.mark { display: inline-block; min-width: 3.4em; text-align: center; font-size: 0.8rem; font-weight: 600; border: 1px solid currentColor; border-radius: 4px; padding: 0 6px; margin-right: 6px; }
+.mark.pass { color: var(--ok); } .mark.note { color: var(--warn); } .mark.fail { color: var(--bad); }
+.honest { border-left: 4px solid var(--warn); }
+.honest ul, .card ul { margin: 4px 0; padding-left: 20px; }
+.bad { color: var(--bad); font-weight: 600; } .ok { color: var(--ok); }
+.scroll { overflow-x: auto; }
+.row h3 { font-size: 1rem; margin: 0 0 4px; }
+@media (max-width: 640px) {
+  table.stack thead { display: none; }
+  table.stack, table.stack tbody, table.stack tr, table.stack td { display: block; width: 100%; }
+  table.stack tr { background: var(--card); border: 1px solid var(--line); border-radius: 8px; margin: 8px 0; padding: 4px 10px; }
+  table.stack td { border: 0; padding: 2px 0; overflow-wrap: anywhere; }
+  table.stack td::before { content: attr(data-label) ": "; color: var(--muted); }
+  dl { grid-template-columns: 1fr; }
+}</style></head>
+<body>
+<header class="site"><div><p class="brand">Harbor Watch MSSP: AI triage, audited</p><nav aria-label="site"><a href="index.html">Alert queue</a><a href="checklist.html">Buyer's checklist</a><a href="about.html">About this demo</a></nav></div></header>
+<main>
+<p class="banner">Synthetic data. Run 20261109T195806Z-mock, replay of recorded run live-20261028 (claude-sonnet-5-5, recorded 2026-10-28): $0, no model call. Nothing here was executed anywhere.</p>
+<nav class="sub" aria-label="this alert"><a href="index.html">&larr; queue</a><a href="case-A-023.html" aria-current="page">Case</a><a href="trust-A-023.html">Trust report</a><a href="audit-A-023.html">Audit trail</a></nav>
+<h1>Case A-023: Failed logons followed by a success</h1>
+<p class="banner"><span class="mark pass">pass</span>Chain verified when this page was built, head <span class="hash">d24db6a8ccb6834c24ca01822c3e4bd00e4a40196ebb7353b106884acf97a30a</span>; re-run <code>asa audit verify out/runs/20261109T195806Z-mock/A-023</code></p>
+<p class="muted">run 20261109T195806Z-mock &middot; claude-sonnet-5-5 &middot; effort high</p>
+<div class="card"><dl><dt>rule</dt><dd>Failed logons followed by a success</dd><dt>technique</dt><dd>T1110.001</dd><dt>severity</dt><dd>medium</dd><dt>host</dt><dd>WS-04</dd><dt>user</dt><dd>user04</dd><dt>time</dt><dd>2026-03-03T15:08:27.000Z</dd><dt>trigger event</dt><dd>E-004464</dd></dl></div>
+<div class="card"><p class="verdict benign">Verdict: benign <span class="tag">confidence medium</span></p><p>Two failed interactive logons for user04 on WS-04 were followed about 35 seconds later by a successful interactive logon. These are the only failures on the host that day. Nothing suspicious followed. The user unlocked the session, opened Edge from explorer.exe, and the only network traffic was svchost.exe to news.example and weather.example. This looks like a mistyped password, not brute force. No action is needed.</p></div>
+<h2 id="claims">Claims and evidence</h2><p class="muted">Each claim with the events it cites; open an event id to see the event as the agent's tools showed it.</p>
+<div class="card"><p><strong>1.</strong> Only two failed interactive logons for user04 occurred (15:07:37 and 15:07:52), then an interactive success at 15:08:27. That is a low-volume, same-console pattern consistent with a typo, not password guessing.</p><blockquote>E-004462 <code>event.outcome</code>: failure</blockquote><blockquote>E-004464 <code>event.outcome</code>: success</blockquote><details><summary>E-004462</summary><pre>{
+  &quot;event_id&quot;: &quot;E-004462&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T15:07:37.000Z&quot;,
+  &quot;host&quot;: &quot;WS-04&quot;,
+  &quot;kind&quot;: &quot;logon&quot;,
+  &quot;user.name&quot;: &quot;user04&quot;,
+  &quot;event.outcome&quot;: &quot;failure&quot;,
+  &quot;logon.type&quot;: &quot;interactive&quot;
+}</pre></details><details><summary>E-004463</summary><pre>{
+  &quot;event_id&quot;: &quot;E-004463&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T15:07:52.000Z&quot;,
+  &quot;host&quot;: &quot;WS-04&quot;,
+  &quot;kind&quot;: &quot;logon&quot;,
+  &quot;user.name&quot;: &quot;user04&quot;,
+  &quot;event.outcome&quot;: &quot;failure&quot;,
+  &quot;logon.type&quot;: &quot;interactive&quot;
+}</pre></details><details><summary>E-004464</summary><pre>{
+  &quot;event_id&quot;: &quot;E-004464&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T15:08:27.000Z&quot;,
+  &quot;host&quot;: &quot;WS-04&quot;,
+  &quot;kind&quot;: &quot;logon&quot;,
+  &quot;user.name&quot;: &quot;user04&quot;,
+  &quot;rule.name&quot;: &quot;Failed logons followed by a success&quot;,
+  &quot;threat.technique.id&quot;: &quot;T1110.001&quot;,
+  &quot;event.severity&quot;: &quot;medium&quot;,
+  &quot;event.outcome&quot;: &quot;success&quot;,
+  &quot;logon.type&quot;: &quot;interactive&quot;
+}</pre></details></div>
+<div class="card"><p><strong>2.</strong> After the success the activity was ordinary: a session unlock, Edge launched by explorer.exe, and svchost.exe traffic to news.example and weather.example. There was no suspicious process, persistence or unusual outbound traffic.</p><blockquote>E-002402 <code>process.command_line</code>: msedge.exe --profile-directory=Default</blockquote><blockquote>E-002438 <code>dns.question.name</code>: news.example</blockquote><details><summary>E-002398</summary><pre>{
+  &quot;event_id&quot;: &quot;E-002398&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T15:09:49.492Z&quot;,
+  &quot;host&quot;: &quot;WS-04&quot;,
+  &quot;kind&quot;: &quot;logon&quot;,
+  &quot;user.name&quot;: &quot;user04&quot;,
+  &quot;event.outcome&quot;: &quot;success&quot;,
+  &quot;logon.type&quot;: &quot;unlock&quot;
+}</pre></details><details><summary>E-002402</summary><pre>{
+  &quot;event_id&quot;: &quot;E-002402&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T15:09:58.207Z&quot;,
+  &quot;host&quot;: &quot;WS-04&quot;,
+  &quot;kind&quot;: &quot;process&quot;,
+  &quot;user.name&quot;: &quot;user04&quot;,
+  &quot;process.name&quot;: &quot;msedge.exe&quot;,
+  &quot;process.entity_id&quot;: &quot;P-d0a9bd0e72fa&quot;,
+  &quot;process.command_line&quot;: &quot;msedge.exe --profile-directory=Default&quot;,
+  &quot;process.hash.sha256&quot;: &quot;898d3509c973ba68f1941f9af42b96cbff3198cf53415b4a00a676a4bff2cc89&quot;,
+  &quot;process.parent.name&quot;: &quot;explorer.exe&quot;,
+  &quot;process.parent.entity_id&quot;: &quot;P-9f879d938405&quot;
+}</pre></details><details><summary>E-002438</summary><pre>{
+  &quot;event_id&quot;: &quot;E-002438&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T15:08:30.503Z&quot;,
+  &quot;host&quot;: &quot;WS-04&quot;,
+  &quot;kind&quot;: &quot;network&quot;,
+  &quot;user.name&quot;: &quot;user04&quot;,
+  &quot;process.name&quot;: &quot;svchost.exe&quot;,
+  &quot;destination.ip&quot;: &quot;192.0.2.86&quot;,
+  &quot;destination.port&quot;: 443,
+  &quot;dns.question.name&quot;: &quot;news.example&quot;
+}</pre></details><details><summary>E-002441</summary><pre>{
+  &quot;event_id&quot;: &quot;E-002441&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T15:16:44.310Z&quot;,
+  &quot;host&quot;: &quot;WS-04&quot;,
+  &quot;kind&quot;: &quot;network&quot;,
+  &quot;user.name&quot;: &quot;user04&quot;,
+  &quot;process.name&quot;: &quot;svchost.exe&quot;,
+  &quot;destination.ip&quot;: &quot;192.0.2.44&quot;,
+  &quot;destination.port&quot;: 443,
+  &quot;dns.question.name&quot;: &quot;weather.example&quot;
+}</pre></details></div>
+<h2 id="checker">Evidence checker</h2><p><span class="mark pass">pass</span>0 findings on 2 claims: every citation is an event the agent was shown, every quote is in its field.</p><p class="muted">The checker proves a quote exists, not that the conclusion is right.</p>
+<h2 id="intel">Threat intel: post-triage enrichment (synthetic provider answers)</h2><p>Source: fixtures. Indicators come only from events the verdict cites. The verdict did not use this step: it ran after triage, in plain code.</p><table class="stack"><thead><tr><th>Type</th><th>Value</th><th>From events</th><th>Decision</th><th>Rule</th><th>Providers (synthetic)</th></tr></thead><tbody><tr><td data-label="Type">domain</td><td data-label="Value"><code>news.example</code></td><td data-label="From events">E-002438</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=67; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">domain</td><td data-label="Value"><code>weather.example</code></td><td data-label="From events">E-002441</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=73; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">ipv4</td><td data-label="Value"><code>192.0.2.44</code></td><td data-label="From events">E-002441</td><td data-label="Decision"><span class="">review</span></td><td data-label="Rule">NO_DATA</td><td data-label="Providers (synthetic)">abuseipdb: no_data<br>otx: no_data<br>vt: no_data</td></tr><tr><td data-label="Type">ipv4</td><td data-label="Value"><code>192.0.2.86</code></td><td data-label="From events">E-002438</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">abuseipdb: ok <span class="muted">abuse_score=0; total_reports=0</span><br>otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=74; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">sha256</td><td data-label="Value"><code>898d3509c973ba68f1941f9af42b96cbff3198cf53415b4a00a676a4bff2cc89</code></td><td data-label="From events">E-002402</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=68; malicious=0; suspicious=0</span></td></tr></tbody></table>
+<h2 id="actions">Recommended actions and recorded approvals</h2><div class="scroll"><p class="muted">None.</p></div><p class="muted">Approvals are dry runs: nothing is sent or executed. Approver names are self-declared (--as is free text).</p>
+<p class="muted">tokens: input 10, cache write 5108, cache read 11999, output 1240 &middot; cost $0.02759</p>
+</main>
+</body></html>

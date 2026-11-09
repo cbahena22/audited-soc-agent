@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-UYhcdWeeLaagSZyJd9b53FhkZ9cKouxN9vhOjiGOsjw='; script-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'"><meta name="referrer" content="no-referrer"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Case A-013 - audited SOC agent demo</title><style>:root { --bg: #fbfbf9; --fg: #1d1f21; --muted: #5c6166; --line: #d9dcd6; --card: #ffffff;
+        --bad: #a3221b; --bad-bg: #fdecea; --ok: #1f6f43; --warn: #8a5a00; --banner: #eef2f7; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #16181a; --fg: #e6e6e3; --muted: #a2a7ab; --line: #34383c; --card: #1e2124;
+          --bad: #ff8a80; --bad-bg: #3a1d1b; --ok: #7fd1a0; --warn: #f0c05a; --banner: #23303d; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; }
+main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+h1 { font-size: 1.4rem; margin: 0 0 4px; } h2 { font-size: 1.1rem; margin: 28px 0 8px; }
+.muted { color: var(--muted); }
+.banner { background: var(--banner); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; margin: 12px 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; margin: 8px 0; }
+.verdict { font-size: 1.2rem; font-weight: 600; }
+.verdict.malicious { color: var(--bad); } .verdict.benign { color: var(--ok); } .verdict.needs_human { color: var(--warn); }
+.injection { background: var(--bad-bg); border: 2px solid var(--bad); border-radius: 8px; padding: 12px 16px; }
+.injection h2 { color: var(--bad); margin-top: 0; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 16px; margin: 0; } dt { color: var(--muted); }
+details { margin: 4px 0; } summary { cursor: pointer; font-family: ui-monospace, monospace; }
+pre { white-space: pre-wrap; word-break: break-word; background: var(--bg); border: 1px solid var(--line);
+      border-radius: 6px; padding: 8px; font: 13px/1.4 ui-monospace, monospace; overflow-x: auto; }
+blockquote { margin: 4px 0; padding-left: 10px; border-left: 3px solid var(--line); }
+table { border-collapse: collapse; width: 100%; } th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tag { font-size: 0.8rem; border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; color: var(--muted); }
+:root { --link: #1f4f8a; }
+@media (prefers-color-scheme: dark) { :root { --link: #9cc3ff; } }
+a { color: var(--link); }
+header.site { background: var(--card); border-bottom: 1px solid var(--line); }
+header.site div { max-width: 1080px; margin: 0 auto; padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 4px 20px; align-items: baseline; }
+.brand { margin: 0; font-weight: 600; }
+nav a { margin-right: 14px; white-space: nowrap; }
+nav a[aria-current="page"] { color: var(--fg); font-weight: 600; text-decoration: underline; }
+nav.sub { margin: 4px 0 16px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+main { max-width: 1080px; }
+dd { margin: 0; overflow-wrap: anywhere; }
+code, .hash { font-family: ui-monospace, monospace; font-size: 0.85em; overflow-wrap: anywhere; word-break: break-all; }
+.mark { display: inline-block; min-width: 3.4em; text-align: center; font-size: 0.8rem; font-weight: 600; border: 1px solid currentColor; border-radius: 4px; padding: 0 6px; margin-right: 6px; }
+.mark.pass { color: var(--ok); } .mark.note { color: var(--warn); } .mark.fail { color: var(--bad); }
+.honest { border-left: 4px solid var(--warn); }
+.honest ul, .card ul { margin: 4px 0; padding-left: 20px; }
+.bad { color: var(--bad); font-weight: 600; } .ok { color: var(--ok); }
+.scroll { overflow-x: auto; }
+.row h3 { font-size: 1rem; margin: 0 0 4px; }
+@media (max-width: 640px) {
+  table.stack thead { display: none; }
+  table.stack, table.stack tbody, table.stack tr, table.stack td { display: block; width: 100%; }
+  table.stack tr { background: var(--card); border: 1px solid var(--line); border-radius: 8px; margin: 8px 0; padding: 4px 10px; }
+  table.stack td { border: 0; padding: 2px 0; overflow-wrap: anywhere; }
+  table.stack td::before { content: attr(data-label) ": "; color: var(--muted); }
+  dl { grid-template-columns: 1fr; }
+}</style></head>
+<body>
+<header class="site"><div><p class="brand">Harbor Watch MSSP: AI triage, audited</p><nav aria-label="site"><a href="index.html">Alert queue</a><a href="checklist.html">Buyer's checklist</a><a href="about.html">About this demo</a></nav></div></header>
+<main>
+<p class="banner">Synthetic data. Run 20261109T195806Z-mock, replay of recorded run live-20261028 (claude-sonnet-5-5, recorded 2026-10-28): $0, no model call. Nothing here was executed anywhere.</p>
+<nav class="sub" aria-label="this alert"><a href="index.html">&larr; queue</a><a href="case-A-013.html" aria-current="page">Case</a><a href="trust-A-013.html">Trust report</a><a href="audit-A-013.html">Audit trail</a></nav>
+<h1>Case A-013: Large upload to an external host</h1>
+<p class="banner"><span class="mark pass">pass</span>Chain verified when this page was built, head <span class="hash">09ba47e6d08f89e28e4a19135e11d1bbef95e4f7c1b8c031b4dfc7eb0bf22e1e</span>; re-run <code>asa audit verify out/runs/20261109T195806Z-mock/A-013</code></p>
+<p class="muted">run 20261109T195806Z-mock &middot; claude-sonnet-5-5 &middot; effort high</p>
+<div class="card"><dl><dt>rule</dt><dd>Large upload to an external host</dd><dt>technique</dt><dd>T1567.002</dd><dt>severity</dt><dd>low</dd><dt>host</dt><dd>WS-02</dd><dt>user</dt><dd>svc-backup</dd><dt>time</dt><dd>2026-03-03T13:16:57.000Z</dd><dt>trigger event</dt><dd>E-004443</dd></dl></div>
+<div class="card"><p class="verdict needs_human">Verdict: needs_human <span class="tag">confidence low</span></p><p>The alert looks like a scheduled backup. HarborBackup.exe ran as svc-backup under services.exe with &quot;--job nightly&quot; and uploaded over 443 to vault.offsite-backup.example (198.51.100.140). I found no malicious indicators, but I also found no baseline: no earlier runs of this process, no earlier traffic to that domain, and no upload size in the data. Someone needs to ask the client whether this backup product and offsite vault are authorized, and whether WS-02 should run backups at this time.</p></div>
+<h2 id="claims">Claims and evidence</h2><p class="muted">Each claim with the events it cites; open an event id to see the event as the agent's tools showed it.</p>
+<div class="card"><p><strong>1.</strong> HarborBackup.exe started as svc-backup, launched by services.exe, with a command line for a nightly job. This is consistent with a scheduled service. There were no child processes and no other suspicious activity in the 20 minutes around it.</p><blockquote>E-004442 <code>process.command_line</code>: HarborBackup.exe --job nightly</blockquote><blockquote>E-004442 <code>process.parent.name</code>: services.exe</blockquote><details><summary>E-004442</summary><pre>{
+  &quot;event_id&quot;: &quot;E-004442&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T13:16:52.000Z&quot;,
+  &quot;host&quot;: &quot;WS-02&quot;,
+  &quot;kind&quot;: &quot;process&quot;,
+  &quot;user.name&quot;: &quot;svc-backup&quot;,
+  &quot;process.name&quot;: &quot;HarborBackup.exe&quot;,
+  &quot;process.entity_id&quot;: &quot;P-dcf7248ac31a&quot;,
+  &quot;process.command_line&quot;: &quot;HarborBackup.exe --job nightly&quot;,
+  &quot;process.hash.sha256&quot;: &quot;57c7ee99da2e21bc2fb1b8d0b32437fbd2eb778bbd53c44db84b21bb83867519&quot;,
+  &quot;process.parent.name&quot;: &quot;services.exe&quot;,
+  &quot;process.parent.entity_id&quot;: &quot;P-7215335039cd&quot;
+}</pre></details></div>
+<div class="card"><p><strong>2.</strong> Five seconds after the process started, it made an HTTPS connection to an external host, vault.offsite-backup.example (198.51.100.140), which triggered the large-upload rule. The event has no byte count, so the size cannot be verified. The destination&#x27;s legitimacy cannot be confirmed from the data.</p><blockquote>E-004443 <code>dns.question.name</code>: vault.offsite-backup.example</blockquote><blockquote>E-004443 <code>destination.ip</code>: 198.51.100.140</blockquote><details><summary>E-004443</summary><pre>{
+  &quot;event_id&quot;: &quot;E-004443&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T13:16:57.000Z&quot;,
+  &quot;host&quot;: &quot;WS-02&quot;,
+  &quot;kind&quot;: &quot;network&quot;,
+  &quot;user.name&quot;: &quot;svc-backup&quot;,
+  &quot;rule.name&quot;: &quot;Large upload to an external host&quot;,
+  &quot;threat.technique.id&quot;: &quot;T1567.002&quot;,
+  &quot;event.severity&quot;: &quot;low&quot;,
+  &quot;process.name&quot;: &quot;HarborBackup.exe&quot;,
+  &quot;destination.ip&quot;: &quot;198.51.100.140&quot;,
+  &quot;destination.port&quot;: 443,
+  &quot;dns.question.name&quot;: &quot;vault.offsite-backup.example&quot;
+}</pre></details></div>
+<div class="card"><p><strong>3.</strong> There is no baseline. WS-02 has no earlier HarborBackup.exe runs and no earlier lookups of the offsite-backup domain in the prior 24 hours. The only svc-backup activity on 2026-03-03 is this pair of events. It is therefore unclear whether this is a routine job or a first-time exfiltration-like transfer.</p><details><summary>E-004442</summary><pre>{
+  &quot;event_id&quot;: &quot;E-004442&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T13:16:52.000Z&quot;,
+  &quot;host&quot;: &quot;WS-02&quot;,
+  &quot;kind&quot;: &quot;process&quot;,
+  &quot;user.name&quot;: &quot;svc-backup&quot;,
+  &quot;process.name&quot;: &quot;HarborBackup.exe&quot;,
+  &quot;process.entity_id&quot;: &quot;P-dcf7248ac31a&quot;,
+  &quot;process.command_line&quot;: &quot;HarborBackup.exe --job nightly&quot;,
+  &quot;process.hash.sha256&quot;: &quot;57c7ee99da2e21bc2fb1b8d0b32437fbd2eb778bbd53c44db84b21bb83867519&quot;,
+  &quot;process.parent.name&quot;: &quot;services.exe&quot;,
+  &quot;process.parent.entity_id&quot;: &quot;P-7215335039cd&quot;
+}</pre></details><details><summary>E-004443</summary><pre>{
+  &quot;event_id&quot;: &quot;E-004443&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T13:16:57.000Z&quot;,
+  &quot;host&quot;: &quot;WS-02&quot;,
+  &quot;kind&quot;: &quot;network&quot;,
+  &quot;user.name&quot;: &quot;svc-backup&quot;,
+  &quot;rule.name&quot;: &quot;Large upload to an external host&quot;,
+  &quot;threat.technique.id&quot;: &quot;T1567.002&quot;,
+  &quot;event.severity&quot;: &quot;low&quot;,
+  &quot;process.name&quot;: &quot;HarborBackup.exe&quot;,
+  &quot;destination.ip&quot;: &quot;198.51.100.140&quot;,
+  &quot;destination.port&quot;: 443,
+  &quot;dns.question.name&quot;: &quot;vault.offsite-backup.example&quot;
+}</pre></details></div>
+<h2 id="checker">Evidence checker</h2><p><span class="mark pass">pass</span>0 findings on 3 claims: every citation is an event the agent was shown, every quote is in its field.</p><p class="muted">The checker proves a quote exists, not that the conclusion is right.</p>
+<h2 id="intel">Threat intel: post-triage enrichment (synthetic provider answers)</h2><p>Source: fixtures. Indicators come only from events the verdict cites. The verdict did not use this step: it ran after triage, in plain code.</p><table class="stack"><thead><tr><th>Type</th><th>Value</th><th>From events</th><th>Decision</th><th>Rule</th><th>Providers (synthetic)</th></tr></thead><tbody><tr><td data-label="Type">domain</td><td data-label="Value"><code>vault.offsite-backup.example</code></td><td data-label="From events">E-004443</td><td data-label="Decision"><span class="">review</span></td><td data-label="Rule">CONFLICTING</td><td data-label="Providers (synthetic)">otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=61; malicious=4; suspicious=1</span></td></tr><tr><td data-label="Type">ipv4</td><td data-label="Value"><code>198.51.100.140</code></td><td data-label="From events">E-004443</td><td data-label="Decision"><span class="">review</span></td><td data-label="Rule">CONFLICTING</td><td data-label="Providers (synthetic)">abuseipdb: ok <span class="muted">abuse_score=0; total_reports=0</span><br>otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=67; malicious=7; suspicious=1</span></td></tr><tr><td data-label="Type">sha256</td><td data-label="Value"><code>57c7ee99da2e21bc2fb1b8d0b32437fbd2eb778bbd53c44db84b21bb83867519</code></td><td data-label="From events">E-004442</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=69; malicious=0; suspicious=0</span></td></tr></tbody></table>
+<h2 id="actions">Recommended actions and recorded approvals</h2><div class="scroll"><table><thead><tr><th>id</th><th>action</th><th>target</th><th>reason</th><th>citations</th><th>status</th></tr></thead><tbody><tr><td>ACT-001</td><td>open_ticket</td><td>WS-02</td><td>Ask the client to confirm that HarborBackup.exe, the svc-backup account and the offsite vault vault.offsite-backup.example (198.51.100.140) are authorized, and that a nightly backup from WS-02 at about 13:16 UTC is expected. Escalate to block_ip or isolate_host if they deny it.</td><td>E-004442, E-004443</td><td>not executed</td></tr></tbody></table></div><p class="muted">Approvals are dry runs: nothing is sent or executed. Approver names are self-declared (--as is free text).</p>
+<p class="muted">tokens: input 10, cache write 6097, cache read 12739, output 2376 &middot; cost $0.04157</p>
+</main>
+</body></html>

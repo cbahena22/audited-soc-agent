@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-UYhcdWeeLaagSZyJd9b53FhkZ9cKouxN9vhOjiGOsjw='; script-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'"><meta name="referrer" content="no-referrer"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Case A-026 - audited SOC agent demo</title><style>:root { --bg: #fbfbf9; --fg: #1d1f21; --muted: #5c6166; --line: #d9dcd6; --card: #ffffff;
+        --bad: #a3221b; --bad-bg: #fdecea; --ok: #1f6f43; --warn: #8a5a00; --banner: #eef2f7; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #16181a; --fg: #e6e6e3; --muted: #a2a7ab; --line: #34383c; --card: #1e2124;
+          --bad: #ff8a80; --bad-bg: #3a1d1b; --ok: #7fd1a0; --warn: #f0c05a; --banner: #23303d; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; }
+main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+h1 { font-size: 1.4rem; margin: 0 0 4px; } h2 { font-size: 1.1rem; margin: 28px 0 8px; }
+.muted { color: var(--muted); }
+.banner { background: var(--banner); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; margin: 12px 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; margin: 8px 0; }
+.verdict { font-size: 1.2rem; font-weight: 600; }
+.verdict.malicious { color: var(--bad); } .verdict.benign { color: var(--ok); } .verdict.needs_human { color: var(--warn); }
+.injection { background: var(--bad-bg); border: 2px solid var(--bad); border-radius: 8px; padding: 12px 16px; }
+.injection h2 { color: var(--bad); margin-top: 0; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 16px; margin: 0; } dt { color: var(--muted); }
+details { margin: 4px 0; } summary { cursor: pointer; font-family: ui-monospace, monospace; }
+pre { white-space: pre-wrap; word-break: break-word; background: var(--bg); border: 1px solid var(--line);
+      border-radius: 6px; padding: 8px; font: 13px/1.4 ui-monospace, monospace; overflow-x: auto; }
+blockquote { margin: 4px 0; padding-left: 10px; border-left: 3px solid var(--line); }
+table { border-collapse: collapse; width: 100%; } th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tag { font-size: 0.8rem; border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; color: var(--muted); }
+:root { --link: #1f4f8a; }
+@media (prefers-color-scheme: dark) { :root { --link: #9cc3ff; } }
+a { color: var(--link); }
+header.site { background: var(--card); border-bottom: 1px solid var(--line); }
+header.site div { max-width: 1080px; margin: 0 auto; padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 4px 20px; align-items: baseline; }
+.brand { margin: 0; font-weight: 600; }
+nav a { margin-right: 14px; white-space: nowrap; }
+nav a[aria-current="page"] { color: var(--fg); font-weight: 600; text-decoration: underline; }
+nav.sub { margin: 4px 0 16px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+main { max-width: 1080px; }
+dd { margin: 0; overflow-wrap: anywhere; }
+code, .hash { font-family: ui-monospace, monospace; font-size: 0.85em; overflow-wrap: anywhere; word-break: break-all; }
+.mark { display: inline-block; min-width: 3.4em; text-align: center; font-size: 0.8rem; font-weight: 600; border: 1px solid currentColor; border-radius: 4px; padding: 0 6px; margin-right: 6px; }
+.mark.pass { color: var(--ok); } .mark.note { color: var(--warn); } .mark.fail { color: var(--bad); }
+.honest { border-left: 4px solid var(--warn); }
+.honest ul, .card ul { margin: 4px 0; padding-left: 20px; }
+.bad { color: var(--bad); font-weight: 600; } .ok { color: var(--ok); }
+.scroll { overflow-x: auto; }
+.row h3 { font-size: 1rem; margin: 0 0 4px; }
+@media (max-width: 640px) {
+  table.stack thead { display: none; }
+  table.stack, table.stack tbody, table.stack tr, table.stack td { display: block; width: 100%; }
+  table.stack tr { background: var(--card); border: 1px solid var(--line); border-radius: 8px; margin: 8px 0; padding: 4px 10px; }
+  table.stack td { border: 0; padding: 2px 0; overflow-wrap: anywhere; }
+  table.stack td::before { content: attr(data-label) ": "; color: var(--muted); }
+  dl { grid-template-columns: 1fr; }
+}</style></head>
+<body>
+<header class="site"><div><p class="brand">Harbor Watch MSSP: AI triage, audited</p><nav aria-label="site"><a href="index.html">Alert queue</a><a href="checklist.html">Buyer's checklist</a><a href="about.html">About this demo</a></nav></div></header>
+<main>
+<p class="banner">Synthetic data. Run 20261109T195806Z-mock, replay of recorded run live-20261028 (claude-sonnet-5-5, recorded 2026-10-28): $0, no model call. Nothing here was executed anywhere.</p>
+<nav class="sub" aria-label="this alert"><a href="index.html">&larr; queue</a><a href="case-A-026.html" aria-current="page">Case</a><a href="trust-A-026.html">Trust report</a><a href="audit-A-026.html">Audit trail</a></nav>
+<h1>Case A-026: New service installed</h1>
+<p class="banner"><span class="mark pass">pass</span>Chain verified when this page was built, head <span class="hash">d63df81036b7c5899029aadfc65d1f65d4841be0960f04600106572e1bdbd2b5</span>; re-run <code>asa audit verify out/runs/20261109T195806Z-mock/A-026</code></p>
+<p class="muted">run 20261109T195806Z-mock &middot; claude-sonnet-5-5 &middot; effort high</p>
+<div class="card"><dl><dt>rule</dt><dd>New service installed</dd><dt>technique</dt><dd>T1543.003</dd><dt>severity</dt><dd>medium</dd><dt>host</dt><dd>WS-04</dd><dt>user</dt><dd>SYSTEM</dd><dt>time</dt><dd>2026-03-03T17:12:37.000Z</dd><dt>trigger event</dt><dd>E-004471</dd></dl></div>
+<div class="card"><p class="verdict benign">Verdict: benign <span class="tag">confidence medium</span></p><p>The service-install alert on WS-04 comes from the managed updater. services.exe started HarborUpdate.exe, which contacted the internal updates.corp.example. It then ran msiexec silently on a print-driver MSI in C:\ProgramData\HarborWatch\pkg. I found no suspicious follow-on activity, and no injected text appeared in the events. HarborUpdate.exe had no events on WS-04 in the prior 24h, so the analyst on the next shift could confirm with the client that the updater and the print-driver 4.2 rollout are expected.</p></div>
+<h2 id="claims">Claims and evidence</h2><p class="muted">Each claim with the events it cites; open an event id to see the event as the agent's tools showed it.</p>
+<div class="card"><p><strong>1.</strong> The alert trigger is a silent msiexec install of a print-driver MSI from the HarborWatch ProgramData package folder. Its parent is HarborUpdate.exe, running as SYSTEM.</p><blockquote>E-004471 <code>process.command_line</code>: msiexec.exe /i C:\ProgramData\HarborWatch\pkg\print-driver-4.2.msi /qn</blockquote><details><summary>E-004471</summary><pre>{
+  &quot;event_id&quot;: &quot;E-004471&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T17:12:37.000Z&quot;,
+  &quot;host&quot;: &quot;WS-04&quot;,
+  &quot;kind&quot;: &quot;process&quot;,
+  &quot;user.name&quot;: &quot;SYSTEM&quot;,
+  &quot;rule.name&quot;: &quot;New service installed&quot;,
+  &quot;threat.technique.id&quot;: &quot;T1543.003&quot;,
+  &quot;event.severity&quot;: &quot;medium&quot;,
+  &quot;process.name&quot;: &quot;msiexec.exe&quot;,
+  &quot;process.entity_id&quot;: &quot;P-ae63ddffc177&quot;,
+  &quot;process.command_line&quot;: &quot;msiexec.exe /i C:\\ProgramData\\HarborWatch\\pkg\\print-driver-4.2.msi /qn&quot;,
+  &quot;process.hash.sha256&quot;: &quot;7710a4cd75b5c85d326bd17e647b5759a219ac9175d0a5123ea5cd8ab6a5c620&quot;,
+  &quot;process.parent.name&quot;: &quot;HarborUpdate.exe&quot;,
+  &quot;process.parent.entity_id&quot;: &quot;P-dabfc13a9702&quot;
+}</pre></details></div>
+<div class="card"><p><strong>2.</strong> HarborUpdate.exe was launched by services.exe with a routine --check argument, which fits an installed updater service.</p><blockquote>E-004470 <code>process.command_line</code>: HarborUpdate.exe --check</blockquote><details><summary>E-004470</summary><pre>{
+  &quot;event_id&quot;: &quot;E-004470&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T17:12:17.000Z&quot;,
+  &quot;host&quot;: &quot;WS-04&quot;,
+  &quot;kind&quot;: &quot;process&quot;,
+  &quot;user.name&quot;: &quot;SYSTEM&quot;,
+  &quot;process.name&quot;: &quot;HarborUpdate.exe&quot;,
+  &quot;process.entity_id&quot;: &quot;P-dabfc13a9702&quot;,
+  &quot;process.command_line&quot;: &quot;HarborUpdate.exe --check&quot;,
+  &quot;process.hash.sha256&quot;: &quot;eb88e8827bca1fc78ba0a1e7286ca2b7d84072ca015b4e6f82b52d1c0b352319&quot;,
+  &quot;process.parent.name&quot;: &quot;services.exe&quot;,
+  &quot;process.parent.entity_id&quot;: &quot;P-89deb19a243c&quot;
+}</pre></details></div>
+<div class="card"><p><strong>3.</strong> Just before the install, the updater contacted the internal update host over 443 using its own user agent. No external or unusual destinations appear.</p><blockquote>E-004472 <code>dns.question.name</code>: updates.corp.example</blockquote><blockquote>E-004472 <code>user_agent.original</code>: HarborUpdate/4.2</blockquote><details><summary>E-004472</summary><pre>{
+  &quot;event_id&quot;: &quot;E-004472&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T17:12:12.000Z&quot;,
+  &quot;host&quot;: &quot;WS-04&quot;,
+  &quot;kind&quot;: &quot;network&quot;,
+  &quot;user.name&quot;: &quot;SYSTEM&quot;,
+  &quot;process.name&quot;: &quot;HarborUpdate.exe&quot;,
+  &quot;destination.ip&quot;: &quot;192.0.2.80&quot;,
+  &quot;destination.port&quot;: 443,
+  &quot;dns.question.name&quot;: &quot;updates.corp.example&quot;,
+  &quot;user_agent.original&quot;: &quot;HarborUpdate/4.2&quot;
+}</pre></details></div>
+<div class="card"><p><strong>4.</strong> Later activity on the host is normal user04 activity (Edge, Word, mail). No persistence or C2 indicators were found.</p><details><summary>E-002392</summary><pre>{
+  &quot;event_id&quot;: &quot;E-002392&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T17:13:19.400Z&quot;,
+  &quot;host&quot;: &quot;WS-04&quot;,
+  &quot;kind&quot;: &quot;process&quot;,
+  &quot;user.name&quot;: &quot;user04&quot;,
+  &quot;process.name&quot;: &quot;msedge.exe&quot;,
+  &quot;process.entity_id&quot;: &quot;P-df03ab436228&quot;,
+  &quot;process.command_line&quot;: &quot;msedge.exe --profile-directory=Default&quot;,
+  &quot;process.hash.sha256&quot;: &quot;898d3509c973ba68f1941f9af42b96cbff3198cf53415b4a00a676a4bff2cc89&quot;,
+  &quot;process.parent.name&quot;: &quot;explorer.exe&quot;,
+  &quot;process.parent.entity_id&quot;: &quot;P-f30379748685&quot;
+}</pre></details><details><summary>E-002451</summary><pre>{
+  &quot;event_id&quot;: &quot;E-002451&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T17:21:19.802Z&quot;,
+  &quot;host&quot;: &quot;WS-04&quot;,
+  &quot;kind&quot;: &quot;file&quot;,
+  &quot;user.name&quot;: &quot;user04&quot;,
+  &quot;process.name&quot;: &quot;winword.exe&quot;,
+  &quot;file.path&quot;: &quot;C:\\Data\\Shared\\notes-254.docx&quot;,
+  &quot;file.name&quot;: &quot;notes-254.docx&quot;
+}</pre></details><details><summary>E-002415</summary><pre>{
+  &quot;event_id&quot;: &quot;E-002415&quot;,
+  &quot;@timestamp&quot;: &quot;2026-03-03T17:27:07.785Z&quot;,
+  &quot;host&quot;: &quot;WS-04&quot;,
+  &quot;kind&quot;: &quot;network&quot;,
+  &quot;user.name&quot;: &quot;user04&quot;,
+  &quot;process.name&quot;: &quot;svchost.exe&quot;,
+  &quot;destination.ip&quot;: &quot;192.0.2.45&quot;,
+  &quot;destination.port&quot;: 443,
+  &quot;dns.question.name&quot;: &quot;mail.corp.example&quot;
+}</pre></details></div>
+<h2 id="checker">Evidence checker</h2><p><span class="mark pass">pass</span>0 findings on 4 claims: every citation is an event the agent was shown, every quote is in its field.</p><p class="muted">The checker proves a quote exists, not that the conclusion is right.</p>
+<h2 id="intel">Threat intel: post-triage enrichment (synthetic provider answers)</h2><p>Source: fixtures. Indicators come only from events the verdict cites. The verdict did not use this step: it ran after triage, in plain code.</p><table class="stack"><thead><tr><th>Type</th><th>Value</th><th>From events</th><th>Decision</th><th>Rule</th><th>Providers (synthetic)</th></tr></thead><tbody><tr><td data-label="Type">domain</td><td data-label="Value"><code>mail.corp.example</code></td><td data-label="From events">E-002415</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">ALLOWLISTED</td><td data-label="Providers (synthetic)"></td></tr><tr><td data-label="Type">domain</td><td data-label="Value"><code>updates.corp.example</code></td><td data-label="From events">E-004472</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">ALLOWLISTED</td><td data-label="Providers (synthetic)"></td></tr><tr><td data-label="Type">ipv4</td><td data-label="Value"><code>192.0.2.45</code></td><td data-label="From events">E-002415</td><td data-label="Decision"><span class="">review</span></td><td data-label="Rule">NO_DATA</td><td data-label="Providers (synthetic)">abuseipdb: no_data<br>otx: no_data<br>vt: no_data</td></tr><tr><td data-label="Type">ipv4</td><td data-label="Value"><code>192.0.2.80</code></td><td data-label="From events">E-004472</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">abuseipdb: ok <span class="muted">abuse_score=0; total_reports=0</span><br>otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=64; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">sha256</td><td data-label="Value"><code>7710a4cd75b5c85d326bd17e647b5759a219ac9175d0a5123ea5cd8ab6a5c620</code></td><td data-label="From events">E-004471</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=58; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">sha256</td><td data-label="Value"><code>898d3509c973ba68f1941f9af42b96cbff3198cf53415b4a00a676a4bff2cc89</code></td><td data-label="From events">E-002392</td><td data-label="Decision"><span class="">clear</span></td><td data-label="Rule">LOW_SIGNAL</td><td data-label="Providers (synthetic)">otx: ok <span class="muted">pulse_count=0</span><br>vt: ok <span class="muted">harmless=68; malicious=0; suspicious=0</span></td></tr><tr><td data-label="Type">sha256</td><td data-label="Value"><code>eb88e8827bca1fc78ba0a1e7286ca2b7d84072ca015b4e6f82b52d1c0b352319</code></td><td data-label="From events">E-004470</td><td data-label="Decision"><span class="">review</span></td><td data-label="Rule">NO_DATA</td><td data-label="Providers (synthetic)">otx: no_data<br>vt: no_data</td></tr></tbody></table>
+<h2 id="actions">Recommended actions and recorded approvals</h2><div class="scroll"><table><thead><tr><th>id</th><th>action</th><th>target</th><th>reason</th><th>citations</th><th>status</th></tr></thead><tbody><tr><td>ACT-001</td><td>open_ticket</td><td>WS-04</td><td>Low-priority check with the client that the HarborUpdate print-driver 4.2 rollout is expected. No prior HarborUpdate activity was seen on WS-04 in the previous 24h.</td><td>E-004471, E-004470</td><td>not executed</td></tr></tbody></table></div><p class="muted">Approvals are dry runs: nothing is sent or executed. Approver names are self-declared (--as is free text).</p>
+<p class="muted">tokens: input 10, cache write 5504, cache read 13177, output 1802 &middot; cost $0.034435</p>
+</main>
+</body></html>
