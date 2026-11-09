@@ -1,0 +1,188 @@
+{
+  "ipv4:192.0.2.10": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.15": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.20": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.32": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.33": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.36": {
+    "data": {
+      "abuseConfidenceScore": 4,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.38": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.47": {
+    "data": {
+      "abuseConfidenceScore": 35,
+      "totalReports": 8
+    }
+  },
+  "ipv4:192.0.2.51": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.52": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.54": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.58": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.59": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.62": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.66": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.67": {
+    "data": {
+      "abuseConfidenceScore": 31,
+      "totalReports": 7
+    }
+  },
+  "ipv4:192.0.2.68": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.69": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.75": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.78": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.80": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.81": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.84": {
+    "data": {
+      "abuseConfidenceScore": 40,
+      "totalReports": 10
+    }
+  },
+  "ipv4:192.0.2.86": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.91": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:192.0.2.93": {
+    "data": {
+      "abuseConfidenceScore": 40,
+      "totalReports": 10
+    }
+  },
+  "ipv4:192.0.2.99": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:198.51.100.140": {
+    "data": {
+      "abuseConfidenceScore": 0,
+      "totalReports": 0
+    }
+  },
+  "ipv4:203.0.113.150": {
+    "data": {
+      "abuseConfidenceScore": 94,
+      "totalReports": 23
+    }
+  },
+  "ipv4:203.0.113.40": {
+    "data": {
+      "abuseConfidenceScore": 80,
+      "totalReports": 20
+    }
+  },
+  "ipv4:203.0.113.77": {
+    "data": {
+      "abuseConfidenceScore": 83,
+      "totalReports": 20
+    }
+  }
+}

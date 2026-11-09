@@ -1,0 +1,541 @@
+{
+  "domain:assist.vendor-support.example": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 68,
+          "malicious": 10,
+          "suspicious": 2
+        }
+      }
+    }
+  },
+  "domain:news.example": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 67,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "domain:vault.offsite-backup.example": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 61,
+          "malicious": 4,
+          "suspicious": 1
+        }
+      }
+    }
+  },
+  "domain:weather.example": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 73,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.10": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 61,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.15": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 65,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.20": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 62,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.32": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 70,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.33": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 75,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.36": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 70,
+          "malicious": 4,
+          "suspicious": 1
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.38": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 55,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.47": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 78,
+          "malicious": 1,
+          "suspicious": 1
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.51": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 65,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.52": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 57,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.54": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 70,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.58": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 68,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.59": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 61,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.62": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 68,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.66": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 79,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.67": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 61,
+          "malicious": 1,
+          "suspicious": 1
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.68": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 63,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.69": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 78,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.75": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 77,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.78": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 67,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.80": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 64,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.81": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 80,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.84": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 56,
+          "malicious": 1,
+          "suspicious": 1
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.86": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 74,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.91": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 80,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.93": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 77,
+          "malicious": 1,
+          "suspicious": 1
+        }
+      }
+    }
+  },
+  "ipv4:192.0.2.99": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 75,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "ipv4:198.51.100.140": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 67,
+          "malicious": 7,
+          "suspicious": 1
+        }
+      }
+    }
+  },
+  "ipv4:203.0.113.150": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 72,
+          "malicious": 11,
+          "suspicious": 2
+        }
+      }
+    }
+  },
+  "ipv4:203.0.113.40": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 69,
+          "malicious": 10,
+          "suspicious": 2
+        }
+      }
+    }
+  },
+  "ipv4:203.0.113.77": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 58,
+          "malicious": 11,
+          "suspicious": 2
+        }
+      }
+    }
+  },
+  "sha256:029a8d229b97051acb38443c7a845dd819d231c8800fbd8ae0b1331376d1c71e": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 73,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "sha256:1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 72,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "sha256:57c7ee99da2e21bc2fb1b8d0b32437fbd2eb778bbd53c44db84b21bb83867519": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 69,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "sha256:5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 73,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "sha256:61daeb46115ea8ecae0aa4d1e534ba2083ccc17f4dee2a0379d8622f34fd5383": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 70,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "sha256:6a72327cff3dd03caaf54f45c6d0a682623b2b338eafef50b4d021a15e329f76": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 77,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "sha256:7710a4cd75b5c85d326bd17e647b5759a219ac9175d0a5123ea5cd8ab6a5c620": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 58,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "sha256:7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c7c": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 60,
+          "malicious": 9,
+          "suspicious": 2
+        }
+      }
+    }
+  },
+  "sha256:80c5e83df063d70fe62788bbb5e80e114b548514ef66db7ddadcb680c6759709": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 55,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "sha256:864ff2b58b2237d3a696ac25a1c507f0190b8820774e2268a97cbe045558b9f5": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 60,
+          "malicious": 7,
+          "suspicious": 1
+        }
+      }
+    }
+  },
+  "sha256:898d3509c973ba68f1941f9af42b96cbff3198cf53415b4a00a676a4bff2cc89": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 68,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "sha256:8bd6abfbcdd84a1b3a98c4c122c75fb5e5e07b5d8bccf884dd48fb06fac6a9de": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 59,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "sha256:934d8659a93d256f23899ac6455d014b4f2f9670d6e5181a59f85d557a62d95f": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 78,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  },
+  "sha256:dd361d90d9ef2a7fcfcdd019d89bf756d8d47aac79b1b1f63d33dab59b725a2d": {
+    "data": {
+      "attributes": {
+        "last_analysis_stats": {
+          "harmless": 55,
+          "malicious": 0,
+          "suspicious": 0
+        }
+      }
+    }
+  }
+}

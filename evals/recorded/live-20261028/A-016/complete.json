@@ -1,0 +1,8 @@
+{
+  "alert_id": "A-016",
+  "turns": 4,
+  "model": "claude-sonnet-5-5",
+  "effort": "high",
+  "verdict": "benign",
+  "stop_note": null
+}

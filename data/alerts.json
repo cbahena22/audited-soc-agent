@@ -1,0 +1,512 @@
+[
+  {
+    "alert_id": "A-001",
+    "@timestamp": "2026-03-04T15:20:12.000Z",
+    "title": "PowerShell started by a scheduled task",
+    "rule": {
+      "name": "PowerShell started by a scheduled task"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1053.005"
+      }
+    },
+    "severity": "medium",
+    "host": "WS-04",
+    "user": "svc-reports",
+    "event_id": "E-004420"
+  },
+  {
+    "alert_id": "A-002",
+    "@timestamp": "2026-03-03T15:19:50.000Z",
+    "title": "New service installed",
+    "rule": {
+      "name": "New service installed"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1543.003"
+      }
+    },
+    "severity": "high",
+    "host": "WS-10",
+    "user": "SYSTEM",
+    "event_id": "E-004423"
+  },
+  {
+    "alert_id": "A-003",
+    "@timestamp": "2026-03-02T02:44:33.000Z",
+    "title": "User added to local administrators",
+    "rule": {
+      "name": "User added to local administrators"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1098"
+      }
+    },
+    "severity": "medium",
+    "host": "WS-07",
+    "user": "it-ops2",
+    "event_id": "E-004425"
+  },
+  {
+    "alert_id": "A-004",
+    "@timestamp": "2026-03-03T10:03:15.000Z",
+    "title": "Large upload to an external host",
+    "rule": {
+      "name": "Large upload to an external host"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1567.002"
+      }
+    },
+    "severity": "low",
+    "host": "WS-01",
+    "user": "svc-backup",
+    "event_id": "E-004428"
+  },
+  {
+    "alert_id": "A-005",
+    "@timestamp": "2026-03-04T09:45:19.000Z",
+    "title": "Archive created by a script",
+    "rule": {
+      "name": "Archive created by a script"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1560.001"
+      }
+    },
+    "severity": "high",
+    "host": "WS-09",
+    "user": "SYSTEM",
+    "event_id": "E-004430"
+  },
+  {
+    "alert_id": "A-006",
+    "@timestamp": "2026-03-04T01:46:11.000Z",
+    "title": "Logon from a new external address",
+    "rule": {
+      "name": "Logon from a new external address"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1078"
+      }
+    },
+    "severity": "low",
+    "host": "WS-11",
+    "user": "user11",
+    "event_id": "E-004432"
+  },
+  {
+    "alert_id": "A-007",
+    "@timestamp": "2026-03-02T09:14:05.000Z",
+    "title": "Encoded PowerShell with outbound connection",
+    "rule": {
+      "name": "Encoded PowerShell with outbound connection"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1059.001"
+      }
+    },
+    "severity": "high",
+    "host": "WS-03",
+    "user": "user03",
+    "event_id": "E-000103"
+  },
+  {
+    "alert_id": "A-008",
+    "@timestamp": "2026-03-04T17:01:19.000Z",
+    "title": "Many files written to a network share",
+    "rule": {
+      "name": "Many files written to a network share"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1039"
+      }
+    },
+    "severity": "low",
+    "host": "WS-06",
+    "user": "user06",
+    "event_id": "E-004434"
+  },
+  {
+    "alert_id": "A-009",
+    "@timestamp": "2026-03-04T16:52:26.000Z",
+    "title": "PowerShell started by a scheduled task",
+    "rule": {
+      "name": "PowerShell started by a scheduled task"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1053.005"
+      }
+    },
+    "severity": "high",
+    "host": "SRV-01",
+    "user": "svc-reports",
+    "event_id": "E-004436"
+  },
+  {
+    "alert_id": "A-010",
+    "@timestamp": "2026-03-03T01:18:49.000Z",
+    "title": "Rare outbound destination",
+    "rule": {
+      "name": "Rare outbound destination"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1071.001"
+      }
+    },
+    "severity": "high",
+    "host": "WS-08",
+    "user": "user08",
+    "event_id": "E-004439"
+  },
+  {
+    "alert_id": "A-011",
+    "@timestamp": "2026-03-04T02:06:08.000Z",
+    "title": "Remote desktop logon outside business hours",
+    "rule": {
+      "name": "Remote desktop logon outside business hours"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1021.001"
+      }
+    },
+    "severity": "medium",
+    "host": "SRV-01",
+    "user": "it-ops2",
+    "event_id": "E-004440"
+  },
+  {
+    "alert_id": "A-012",
+    "@timestamp": "2026-03-02T22:00:04.000Z",
+    "title": "PowerShell started by a scheduled task",
+    "rule": {
+      "name": "PowerShell started by a scheduled task"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1053.005"
+      }
+    },
+    "severity": "medium",
+    "host": "WS-05",
+    "user": "svc-reports",
+    "event_id": "E-000201"
+  },
+  {
+    "alert_id": "A-013",
+    "@timestamp": "2026-03-03T13:16:57.000Z",
+    "title": "Large upload to an external host",
+    "rule": {
+      "name": "Large upload to an external host"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1567.002"
+      }
+    },
+    "severity": "low",
+    "host": "WS-02",
+    "user": "svc-backup",
+    "event_id": "E-004443"
+  },
+  {
+    "alert_id": "A-014",
+    "@timestamp": "2026-03-03T23:44:50.000Z",
+    "title": "User added to local administrators",
+    "rule": {
+      "name": "User added to local administrators"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1098"
+      }
+    },
+    "severity": "low",
+    "host": "SRV-03",
+    "user": "it-ops2",
+    "event_id": "E-004444"
+  },
+  {
+    "alert_id": "A-015",
+    "@timestamp": "2026-03-04T17:48:25.000Z",
+    "title": "Failed logons followed by a success",
+    "rule": {
+      "name": "Failed logons followed by a success"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1110.001"
+      }
+    },
+    "severity": "medium",
+    "host": "SRV-01",
+    "user": "svc-backup",
+    "event_id": "E-004448"
+  },
+  {
+    "alert_id": "A-016",
+    "@timestamp": "2026-03-03T11:05:14.000Z",
+    "title": "Many files written to a network share",
+    "rule": {
+      "name": "Many files written to a network share"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1039"
+      }
+    },
+    "severity": "medium",
+    "host": "WS-09",
+    "user": "user09",
+    "event_id": "E-004450"
+  },
+  {
+    "alert_id": "A-017",
+    "@timestamp": "2026-03-02T22:38:08.000Z",
+    "title": "Logon from a new external address",
+    "rule": {
+      "name": "Logon from a new external address"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1078"
+      }
+    },
+    "severity": "low",
+    "host": "WS-11",
+    "user": "user11",
+    "event_id": "E-004451"
+  },
+  {
+    "alert_id": "A-018",
+    "@timestamp": "2026-03-02T11:00:12.000Z",
+    "title": "New service installed",
+    "rule": {
+      "name": "New service installed"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1543.003"
+      }
+    },
+    "severity": "high",
+    "host": "SRV-01",
+    "user": "SYSTEM",
+    "event_id": "E-004453"
+  },
+  {
+    "alert_id": "A-019",
+    "@timestamp": "2026-03-04T22:23:56.000Z",
+    "title": "Remote desktop logon outside business hours",
+    "rule": {
+      "name": "Remote desktop logon outside business hours"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1021.001"
+      }
+    },
+    "severity": "medium",
+    "host": "SRV-01",
+    "user": "it-ops2",
+    "event_id": "E-004455"
+  },
+  {
+    "alert_id": "A-020",
+    "@timestamp": "2026-03-02T03:53:41.000Z",
+    "title": "Rare outbound destination",
+    "rule": {
+      "name": "Rare outbound destination"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1071.001"
+      }
+    },
+    "severity": "medium",
+    "host": "WS-10",
+    "user": "user10",
+    "event_id": "E-004458"
+  },
+  {
+    "alert_id": "A-021",
+    "@timestamp": "2026-03-03T02:11:40.000Z",
+    "title": "Interactive logon by a service account",
+    "rule": {
+      "name": "Interactive logon by a service account"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1078.002"
+      }
+    },
+    "severity": "medium",
+    "host": "SRV-02",
+    "user": "svc-backup",
+    "event_id": "E-000301"
+  },
+  {
+    "alert_id": "A-022",
+    "@timestamp": "2026-03-02T17:50:57.000Z",
+    "title": "Archive created by a script",
+    "rule": {
+      "name": "Archive created by a script"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1560.001"
+      }
+    },
+    "severity": "high",
+    "host": "WS-10",
+    "user": "SYSTEM",
+    "event_id": "E-004460"
+  },
+  {
+    "alert_id": "A-023",
+    "@timestamp": "2026-03-03T15:08:27.000Z",
+    "title": "Failed logons followed by a success",
+    "rule": {
+      "name": "Failed logons followed by a success"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1110.001"
+      }
+    },
+    "severity": "medium",
+    "host": "WS-04",
+    "user": "user04",
+    "event_id": "E-004464"
+  },
+  {
+    "alert_id": "A-024",
+    "@timestamp": "2026-03-02T02:13:48.000Z",
+    "title": "User added to local administrators",
+    "rule": {
+      "name": "User added to local administrators"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1098"
+      }
+    },
+    "severity": "medium",
+    "host": "SRV-01",
+    "user": "it-ops2",
+    "event_id": "E-004465"
+  },
+  {
+    "alert_id": "A-025",
+    "@timestamp": "2026-03-02T13:45:12.000Z",
+    "title": "PowerShell started by a scheduled task",
+    "rule": {
+      "name": "PowerShell started by a scheduled task"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1053.005"
+      }
+    },
+    "severity": "medium",
+    "host": "WS-06",
+    "user": "svc-reports",
+    "event_id": "E-004468"
+  },
+  {
+    "alert_id": "A-026",
+    "@timestamp": "2026-03-03T17:12:37.000Z",
+    "title": "New service installed",
+    "rule": {
+      "name": "New service installed"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1543.003"
+      }
+    },
+    "severity": "medium",
+    "host": "WS-04",
+    "user": "SYSTEM",
+    "event_id": "E-004471"
+  },
+  {
+    "alert_id": "A-027",
+    "@timestamp": "2026-03-03T23:14:33.000Z",
+    "title": "Logon from a new external address",
+    "rule": {
+      "name": "Logon from a new external address"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1078"
+      }
+    },
+    "severity": "low",
+    "host": "WS-12",
+    "user": "user12",
+    "event_id": "E-004473"
+  },
+  {
+    "alert_id": "A-028",
+    "@timestamp": "2026-03-04T13:53:19.000Z",
+    "title": "Large upload to an external host",
+    "rule": {
+      "name": "Large upload to an external host"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1567.002"
+      }
+    },
+    "severity": "medium",
+    "host": "WS-07",
+    "user": "svc-backup",
+    "event_id": "E-004475"
+  },
+  {
+    "alert_id": "A-029",
+    "@timestamp": "2026-03-02T16:17:22.000Z",
+    "title": "Archive created by a script",
+    "rule": {
+      "name": "Archive created by a script"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1560.001"
+      }
+    },
+    "severity": "medium",
+    "host": "WS-02",
+    "user": "SYSTEM",
+    "event_id": "E-004477"
+  },
+  {
+    "alert_id": "A-030",
+    "@timestamp": "2026-03-03T02:53:48.000Z",
+    "title": "Rare outbound destination",
+    "rule": {
+      "name": "Rare outbound destination"
+    },
+    "threat": {
+      "technique": {
+        "id": "T1071.001"
+      }
+    },
+    "severity": "medium",
+    "host": "WS-06",
+    "user": "user06",
+    "event_id": "E-004480"
+  }
+]

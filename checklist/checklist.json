@@ -1,0 +1,110 @@
+[
+  {
+    "id": "Q01",
+    "question": "Can it change anything in my environment?",
+    "answer": "No. Its tools only read the event store, its recommended actions are text, and an approval is a dry run written to approvals.jsonl; no code path sends or executes an action.",
+    "console_view": "case:A-007#actions",
+    "code": ["src/asa/tools.py::Dataset.call", "src/asa/actions.py::approve"],
+    "tests": ["tests/test_approve.py::test_no_module_defines_a_send_or_execute_path", "tests/test_isolation.py::test_no_private_or_network_imports"],
+    "limits": "This holds for this code; a deployment that adds response tools needs its own review."
+  },
+  {
+    "id": "Q02",
+    "question": "Can a planted instruction in a log redirect it?",
+    "answer": "The data holds 6 planted texts that ask an AI reader to close or approve an alert; the agent reported all 6 and escalated those alerts to a person. The checker flags any instruction-shaped text the agent saw and did not report.",
+    "console_view": "case:A-007#injection",
+    "code": ["src/asa/checker.py::injection_matches", "src/asa/evals.py::followed_count"],
+    "tests": ["tests/test_checker.py::test_pattern_list_flags_exactly_the_six_planted_events", "tests/test_trust.py::test_followed_is_null_without_asks_and_computed_with_them"],
+    "limits": "A known set of 6 texts; reporting them does not prove resistance to new wording."
+  },
+  {
+    "id": "Q03",
+    "question": "Does every claim cite a real event?",
+    "answer": "Code checks every claim: the cited event must exist, a tool must have returned it to the agent, and each quote must be in the named field. On the recorded run it found 0 unsupported claims in 86.",
+    "console_view": "case:A-007#claims",
+    "code": ["src/asa/checker.py::check"],
+    "tests": ["tests/test_checker.py::test_each_kind_fires_on_its_run", "tests/test_mutations.py::test_every_expected_catch_is_caught"],
+    "limits": "It proves a quote exists, not that the conclusion drawn from it is right."
+  },
+  {
+    "id": "Q04",
+    "question": "Can I see every step it took?",
+    "answer": "Yes. transcript.jsonl keeps every model turn and tool result, and audit.jsonl lists each step in order with a hash of that record.",
+    "console_view": "audit:A-007#chain",
+    "code": ["src/asa/agent.py::investigate", "src/asa/audit.py::Trail", "src/asa/console/pages.py::audit_page"],
+    "tests": ["tests/test_audit.py::test_replay_trail_has_every_step_in_order", "tests/test_audit.py::test_model_turn_lines_carry_usage_through_the_transcript", "tests/test_console.py::test_audit_page_banner_and_rows"],
+    "limits": "The model's hidden reasoning is not shown; its tool calls, results and final claims are."
+  },
+  {
+    "id": "Q05",
+    "question": "Can the record be edited afterwards?",
+    "answer": "Not without it showing: each audit line carries the hash of the line before, and asa audit verify re-hashes the transcript, verdict, check, approvals and intel files. One changed byte fails at the line it touches.",
+    "console_view": "audit:A-007#chain",
+    "code": ["src/asa/audit.py::verify", "src/asa/audit.py::read_chain", "src/asa/console/build.py::check_trail"],
+    "tests": ["tests/test_audit.py::test_chain_tamper_fails_at_the_right_seq", "tests/test_audit.py::test_an_edited_verdict_fails_at_the_verdict_line", "tests/test_console.py::test_tampered_trail_shows_failed", "tests/test_console.py::test_check_trail_uses_the_real_verifier"],
+    "limits": "Tamper-evident, not tamper-proof: rewriting the whole chain is caught only against a head hash kept somewhere else."
+  },
+  {
+    "id": "Q06",
+    "question": "Who approves an action?",
+    "answer": "A named person, with asa approve. The approval goes to approvals.jsonl and to the audit trail as person:<name>, and it is still a dry run.",
+    "console_view": "case:A-007#actions",
+    "code": ["src/asa/actions.py::approve"],
+    "tests": ["tests/test_approve.py::test_approve_appends_one_dry_run_line", "tests/test_audit.py::test_an_edited_approval_and_an_unrecorded_approval_fail"],
+    "limits": "Names are self-declared: --as is free text and there is no login behind it."
+  },
+  {
+    "id": "Q07",
+    "question": "What does an alert cost, and what stops a runaway bill?",
+    "answer": "On the recorded run an alert cost $0.048 on average and $0.102 at most. A live run needs a hard --budget: the worst-case cost of each request is booked before it is sent, and the run stops when the next one could go over.",
+    "console_view": "trust:A-007#rows",
+    "code": ["src/asa/llm.py::Budget", "src/asa/llm.py::reserve_for"],
+    "tests": ["tests/test_llm.py::test_budget_refuses_at_the_edge", "tests/test_llm.py::test_ledger_resume_after_crash_keeps_prior_spend"],
+    "limits": "List prices on the recording date; replays cost $0."
+  },
+  {
+    "id": "Q08",
+    "question": "How accurate is it, and against what?",
+    "answer": "20 of 30 verdicts match a hand-written answer key, against 15 of 30 for a rule that only reads the alert severity. Only 1 of the 30 alerts is malicious.",
+    "console_view": "queue",
+    "code": ["src/asa/evals.py::triage_summary", "src/asa/evals.py::baseline_verdict"],
+    "tests": ["tests/test_eval_runner.py::test_recorded_results_from_a_small_fixture", "tests/test_eval_runner.py::test_baseline_rule_and_the_real_dataset"],
+    "limits": "Synthetic data, n = 30, one recording; results on malicious alerts are indicative only."
+  },
+  {
+    "id": "Q09",
+    "question": "What happens when it is unsure?",
+    "answer": "It answers needs_human and a person decides; a run that ends without a verdict becomes needs_human too. It over-escalates: 20 needs_human answers where the key expects 10.",
+    "console_view": "queue",
+    "code": ["src/asa/agent.py::_no_verdict", "src/asa/agent.py::investigate"],
+    "tests": ["tests/test_agent.py::test_stop_reason_nudges_once_then_needs_human", "tests/test_agent.py::test_turn_limit"],
+    "limits": "Over-escalation costs analyst time; this run did not tune it down."
+  },
+  {
+    "id": "Q10",
+    "question": "What data leaves my network?",
+    "answer": "In a live run, the alert and the tool results go to the model API through one client with a fixed address. A replay, the checker, the trust report and the audit trail make no network call.",
+    "console_view": "about",
+    "code": ["src/asa/llm.py::live_client"],
+    "tests": ["tests/test_isolation.py::test_exactly_one_client_constructor_in_the_live_branch", "tests/test_agent.py::test_cli_mock_replays_without_network_or_key"],
+    "limits": "What the model provider keeps is set by its terms, not by this code."
+  },
+  {
+    "id": "Q11",
+    "question": "How do I reproduce a past run?",
+    "answer": "Replay its recording at $0: every tool call and result hash must match the recording or the replay stops. The same recording gives the same audit trail, head hash included.",
+    "console_view": "about#limits",
+    "code": ["src/asa/llm.py::ReplayClient", "src/asa/audit.py::Trail", "src/asa/demo.py::run"],
+    "tests": ["tests/test_agent.py::test_replay_hash_mismatch_is_a_clear_error", "tests/test_trust.py::test_a007_trail_head_is_reproducible", "tests/test_demo.py::test_demo_end_to_end", "tests/test_demo.py::test_demo_trail_is_reproducible"],
+    "limits": "A replay reproduces a recorded run; a new live run of the same alert can answer differently."
+  },
+  {
+    "id": "Q12",
+    "question": "What does threat intel add, and did the verdict use it?",
+    "answer": "Post-triage enrichment (synthetic provider answers): indicators from the events the verdict cites are looked up in fixtures and marked contain, review or clear. The verdict did not use them.",
+    "console_view": "case:A-007#intel",
+    "code": ["src/asa/intel/extract.py::extract", "src/asa/intel/enrich.py::enrich", "src/asa/console/pages.py::intel_html"],
+    "tests": ["tests/test_intel_enrich.py::test_record_is_labelled_and_says_the_verdict_did_not_use_it", "tests/test_intel_enrich.py::test_injected_field_is_never_looked_up", "tests/test_console.py::test_case_page_panels", "tests/test_console.py::test_console_modules_import_nothing_networked"],
+    "limits": "Fixtures only: no real lookups in this demo."
+  }
+]

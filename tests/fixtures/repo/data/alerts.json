@@ -1,0 +1,35 @@
+[
+  {
+    "alert_id": "A-007",
+    "@timestamp": "2026-03-02T09:14:05.000Z",
+    "title": "Encoded PowerShell with outbound connection",
+    "rule": {"name": "Encoded PowerShell with outbound connection"},
+    "threat": {"technique": {"id": "T1059.001"}},
+    "severity": "high",
+    "host": "WS-03",
+    "user": "user03",
+    "event_id": "E-000103"
+  },
+  {
+    "alert_id": "A-012",
+    "@timestamp": "2026-03-02T22:00:04.000Z",
+    "title": "PowerShell started by a scheduled task",
+    "rule": {"name": "PowerShell started by a scheduled task"},
+    "threat": {"technique": {"id": "T1053.005"}},
+    "severity": "medium",
+    "host": "WS-05",
+    "user": "svc-reports",
+    "event_id": "E-000201"
+  },
+  {
+    "alert_id": "A-021",
+    "@timestamp": "2026-03-03T02:11:40.000Z",
+    "title": "Interactive logon by a service account",
+    "rule": {"name": "Interactive logon by a service account"},
+    "threat": {"technique": {"id": "T1078.002"}},
+    "severity": "medium",
+    "host": "SRV-02",
+    "user": "svc-backup",
+    "event_id": "E-000301"
+  }
+]

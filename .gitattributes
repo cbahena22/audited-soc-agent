@@ -1,0 +1,2 @@
+# Data, fixtures and recordings are compared byte for byte (and hashed): LF on every checkout, Windows included
+* text=auto eol=lf

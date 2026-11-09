@@ -1,0 +1,59 @@
+# Ordered rules, first match wins (deny list beats allow list: a stale allow entry must not hide a known-bad). Thresholds are tuned on the decision dev split only.
+version = "1.0"
+
+[thresholds]
+malicious_min = 3       # engines/reports saying malicious to count as PROVIDER_MALICIOUS
+clean_max = 0           # at most this many to count as clean
+abuse_score_min = 75    # abuse confidence score treated as malicious
+abuse_clean_max = 10    # at most this abuse score counts as clean
+pulses_min = 5          # OTX pulse count treated as malicious
+
+
+[[rules]]
+reason = "ON_DENYLIST"
+bucket = "Contain"
+when = "denylist"
+
+[[rules]]
+reason = "ALLOWLISTED"
+bucket = "Clear"
+when = "allowlist"
+
+[[rules]]
+reason = "IN_COVERAGE"
+bucket = "Clear"
+when = "coverage"
+
+[[rules]]
+reason = "CONFLICTING"
+bucket = "Analyst review"
+when = "conflicting"
+
+[[rules]]
+reason = "PROVIDER_MALICIOUS"
+bucket = "Contain"
+when = "malicious"
+
+[[rules]]
+reason = "GEO_OUTSIDE"
+bucket = "Analyst review"
+when = "geo"
+
+[[rules]]
+reason = "QUOTA_PENDING"
+bucket = "Analyst review"
+when = "quota"
+
+[[rules]]
+reason = "NO_DATA"
+bucket = "Analyst review"
+when = "no_data"
+
+[[rules]]
+reason = "LOW_SIGNAL"
+bucket = "Clear"
+when = "clean"
+
+[default]
+reason = "WEAK_SIGNAL"
+bucket = "Analyst review"

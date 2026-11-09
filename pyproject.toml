@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "audited-soc-agent"
+version = "0.1.0"
+description = "A read-only alert-triage agent for a fictional MSSP, with recorded runs, a case page and a stdio MCP server."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = ["anthropic>=2.3,<3"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "setuptools>=77"]
+
+[project.scripts]
+asa = "asa.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"asa.intel" = ["config/*.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-p no:cacheprovider"
